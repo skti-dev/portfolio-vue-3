@@ -1,0 +1,6 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="100" fill="#667eea"/>
+  <circle cx="100" cy="80" r="30" fill="#fff"/>
+  <path d="M 50 150 Q 100 120 150 150 L 150 200 L 50 200 Z" fill="#fff"/>
+  <text x="100" y="180" text-anchor="middle" fill="#667eea" font-family="Arial" font-size="12">Sua Foto</text>
+</svg>
