@@ -1,6 +1,9 @@
+const name = "Augusto Seabra";
+
 export const messages = {
   pt: {
     portfolio: "Meu Portfólio",
+    name,
     nav: {
       home: "Início",
       certificates: "Certificados",
@@ -9,7 +12,7 @@ export const messages = {
       contact: "Contato",
     },
     hero: {
-      greeting: "Olá, eu sou [Seu Nome]",
+      greeting: "Olá, eu sou",
       description:
         "Desenvolvedor apaixonado por tecnologia, sempre em busca de novos desafios e soluções inovadoras. Bem-vindo ao meu portfólio!",
     },
@@ -96,6 +99,7 @@ export const messages = {
   },
   en: {
     portfolio: "My Portfolio",
+    name,
     nav: {
       home: "Home",
       certificates: "Certificates",
@@ -104,7 +108,7 @@ export const messages = {
       contact: "Contact",
     },
     hero: {
-      greeting: "Hello, I am [Your Name]",
+      greeting: "Hello, I am",
       description:
         "Developer passionate about technology, always looking for new challenges and innovative solutions. Welcome to my portfolio!",
     },

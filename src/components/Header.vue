@@ -31,7 +31,6 @@
 
 <script>
 export default {
-  name: 'Header',
   methods: {
     scrollTo(elementId) {
       const element = document.getElementById(elementId)

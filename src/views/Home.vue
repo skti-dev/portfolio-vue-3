@@ -5,7 +5,10 @@
       <div class="container">
         <div class="hero-content">
           <img src="/placeholder-photo.jpg" alt="Minha foto" class="profile-photo">
-          <h1>{{ $t('hero.greeting') }}</h1>
+          <h1>
+            {{ $t('hero.greeting') }}
+            <AnimatedName />
+          </h1>
           <p>{{ $t('hero.description') }}</p>
         </div>
       </div>
@@ -105,8 +108,12 @@
 </template>
 
 <script>
+import AnimatedName from '../components/AnimatedName.vue'
+
 export default {
-  name: 'Home',
+  components: {
+    AnimatedName
+  },
   data() {
     return {
       certificados: [

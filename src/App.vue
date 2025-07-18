@@ -13,7 +13,6 @@ import Footer from './components/Footer.vue'
 import Chatbot from './components/Chatbot.vue'
 
 export default {
-  name: 'App',
   components: {
     Header,
     Footer,
