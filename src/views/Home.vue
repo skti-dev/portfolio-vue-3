@@ -28,6 +28,17 @@
         <div class="about">
           <h3>{{ $t('about.education') }}</h3>
           <p>{{ $t('about.educationText') }}</p>
+          <div class="education-download">
+            <a 
+              :href="diplomaPdf" 
+              download="RepresentacaoVisualDiplomaDigital-FIAP.pdf"
+              class="download-link"
+              target="_blank"
+            >
+              <i class="fas fa-download"></i>
+              {{ $t('about.downloadDiploma') }}
+            </a>
+          </div>
           
           <h3>{{ $t('about.mainProjects') }}</h3>
           <p>{{ $t('about.mainProjectsText') }}</p>
@@ -101,6 +112,7 @@
 import AnimatedName from '../components/AnimatedName.vue'
 import CertificateSlider from '../components/CertificateSlider.vue'
 import profilePicture from '../assets/images/Foto perfil - recortada.jpg'
+import diplomaPdf from '../assets/docs/RepresentacaoVisualDiplomaDigital-FIAP.pdf'
 
 export default {
   components: {
@@ -110,6 +122,7 @@ export default {
   data() {
     return {
       profilePicture,
+      diplomaPdf,
       projetos: [
         {
           link: 'https://github.com/seuusuario/ecommerce-vue'

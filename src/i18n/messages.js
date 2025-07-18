@@ -33,6 +33,7 @@ export const messages = {
       education: "Formação",
       educationText:
         "[Descreva sua formação acadêmica aqui. Ex: Graduado em Ciência da Computação pela Universidade XYZ, com especialização em desenvolvimento web e mobile.]",
+      downloadDiploma: "Baixar Diploma Digital",
       mainProjects: "Principais Projetos",
       mainProjectsText:
         "[Descreva seus principais projetos aqui. Ex: Desenvolvedor de aplicações web utilizando Vue.js, React, Node.js e MongoDB. Experiência em desenvolvimento de APIs RESTful e integração com bancos de dados.]",
@@ -119,6 +120,7 @@ export const messages = {
       education: "Education",
       educationText:
         "[Describe your academic background here. Ex: Graduated in Computer Science from XYZ University, with specialization in web and mobile development.]",
+      downloadDiploma: "Download Digital Diploma",
       mainProjects: "Main Projects",
       mainProjectsText:
         "[Describe your main projects here. Ex: Web application developer using Vue.js, React, Node.js and MongoDB. Experience in RESTful API development and database integration.]",
