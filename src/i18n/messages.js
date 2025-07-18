@@ -22,6 +22,13 @@ export const messages = {
       projects: "Projetos",
       contact: "Contato",
     },
+    certificates: {
+      title: "Certificados",
+      verify: "Verificar",
+      previous: "Anterior",
+      next: "Próximo",
+      goToSlide: "Ir para slide",
+    },
     about: {
       education: "Formação",
       educationText:
@@ -33,23 +40,6 @@ export const messages = {
       interestsText:
         "[Descreva suas áreas de interesse. Ex: Desenvolvimento Front-end, Back-end, Mobile, Inteligência Artificial, Machine Learning, DevOps e metodologias ágeis.]",
     },
-    certificates: [
-      {
-        title: "Vue.js Certified Developer",
-        description:
-          "Certificação oficial em Vue.js com foco em desenvolvimento de aplicações modernas.",
-      },
-      {
-        title: "JavaScript ES6+ Advanced",
-        description:
-          "Certificação avançada em JavaScript moderno e suas funcionalidades.",
-      },
-      {
-        title: "Node.js Backend Development",
-        description:
-          "Certificação em desenvolvimento backend com Node.js e Express.",
-      },
-    ],
     projects: [
       {
         title: "E-commerce Vue.js",
@@ -118,6 +108,13 @@ export const messages = {
       projects: "Projects",
       contact: "Contact",
     },
+    certificates: {
+      title: "Certificates",
+      verify: "Verify",
+      previous: "Previous",
+      next: "Next",
+      goToSlide: "Go to slide",
+    },
     about: {
       education: "Education",
       educationText:
@@ -129,23 +126,6 @@ export const messages = {
       interestsText:
         "[Describe your areas of interest. Ex: Front-end Development, Back-end, Mobile, Artificial Intelligence, Machine Learning, DevOps and agile methodologies.]",
     },
-    certificates: [
-      {
-        title: "Vue.js Certified Developer",
-        description:
-          "Official Vue.js certification focused on modern application development.",
-      },
-      {
-        title: "JavaScript ES6+ Advanced",
-        description:
-          "Advanced certification in modern JavaScript and its features.",
-      },
-      {
-        title: "Node.js Backend Development",
-        description:
-          "Certification in backend development with Node.js and Express.",
-      },
-    ],
     projects: [
       {
         title: "Vue.js E-commerce",

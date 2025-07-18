@@ -215,6 +215,16 @@ body.mobile-menu-open {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+/* Certificate Section Spacing */
+#certificados {
+  padding: 4rem 0;
+}
+
+#certificados .container {
+  max-width: 1400px;
+  padding: 0 1rem;
+}
+
 /* Hero Section - Mobile First */
 .hero {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

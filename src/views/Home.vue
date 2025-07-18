@@ -17,17 +17,7 @@
     <!-- Seção de Certificados -->
     <section id="certificados" class="section">
       <div class="container">
-        <h2 class="section-title">{{ $t('sections.certificates') }}</h2>
-        <div class="cards-grid">
-          <div class="card" v-for="(certificado, index) in certificados" :key="index">
-            <h3>{{ $t(`certificates.${index}.title`) }}</h3>
-            <p>{{ $t(`certificates.${index}.description`) }}</p>
-            <a :href="certificado.link" target="_blank" class="card-link">
-              <i class="fas fa-external-link-alt"></i>
-              {{ $t('buttons.viewCertificate') }}
-            </a>
-          </div>
-        </div>
+        <CertificateSlider />
       </div>
     </section>
 
@@ -109,26 +99,17 @@
 
 <script>
 import AnimatedName from '../components/AnimatedName.vue'
+import CertificateSlider from '../components/CertificateSlider.vue'
 import profilePicture from '../assets/images/Foto perfil - recortada.jpg'
 
 export default {
   components: {
-    AnimatedName
+    AnimatedName,
+    CertificateSlider
   },
   data() {
     return {
       profilePicture,
-      certificados: [
-        {
-          link: 'https://exemplo.com/certificado1'
-        },
-        {
-          link: 'https://exemplo.com/certificado2'
-        },
-        {
-          link: 'https://exemplo.com/certificado3'
-        }
-      ],
       projetos: [
         {
           link: 'https://github.com/seuusuario/ecommerce-vue'
