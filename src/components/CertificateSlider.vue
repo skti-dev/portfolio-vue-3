@@ -26,7 +26,11 @@
     </div>
     
     <div class="slider-container">
-      <div class="slider-track" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+      <div 
+        ref="sliderTrack"
+        class="slider-track" 
+        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+      >
         <div 
           v-for="(slide, index) in slides" 
           :key="index" 
@@ -90,6 +94,7 @@ export default {
   data() {
     return {
       currentIndex: 0,
+      windowWidth: window.innerWidth,
       certificates: [
         {
           id: '0049aa12-2d4f-492e-9957-86254c66bb3c',
@@ -167,9 +172,15 @@ export default {
     }
   },
   computed: {
+    cardsPerSlide() {
+      // Responsivo baseado na largura atual da janela
+      if (this.windowWidth < 768) return 1
+      if (this.windowWidth < 1024) return 2
+      return 3
+    },
     slides() {
       const slides = []
-      const cardsPerSlide = this.getCardsPerSlide()
+      const cardsPerSlide = this.cardsPerSlide
       
       for (let i = 0; i < this.certificates.length; i += cardsPerSlide) {
         slides.push(this.certificates.slice(i, i + cardsPerSlide))
@@ -181,12 +192,28 @@ export default {
       return this.slides.length
     }
   },
+  watch: {
+    // Observa mudanças no número de slides e ajusta o índice se necessário
+    totalSlides(newTotal) {
+      if (this.currentIndex >= newTotal) {
+        this.currentIndex = Math.max(0, newTotal - 1)
+      }
+    },
+    // Observa mudanças na largura da janela para animações suaves
+    windowWidth(newWidth, oldWidth) {
+      // Adiciona uma pequena animação quando a tela muda de tamanho
+      const slider = this.$refs.sliderTrack
+      if (slider) {
+        slider.style.transition = 'transform 0.3s ease'
+        setTimeout(() => {
+          slider.style.transition = 'transform 0.4s ease'
+        }, 300)
+      }
+    }
+  },
   methods: {
-    getCardsPerSlide() {
-      // Mobile: 1 card, Tablet: 2 cards, Desktop: 3 cards
-      if (window.innerWidth < 768) return 1
-      if (window.innerWidth < 1024) return 2
-      return 3
+    updateWindowWidth() {
+      this.windowWidth = window.innerWidth
     },
     nextSlide() {
       if (this.currentIndex < this.totalSlides - 1) {
@@ -208,15 +235,38 @@ export default {
       return ''
     },
     handleResize() {
-      // Reset to first slide when screen size changes
-      this.currentIndex = 0
+      const oldCardsPerSlide = this.cardsPerSlide
+      this.updateWindowWidth()
+      
+      // Se o número de cards por slide mudou, ajusta o índice atual
+      if (oldCardsPerSlide !== this.cardsPerSlide) {
+        // Calcula qual certificado estava sendo exibido
+        const currentCertificateIndex = this.currentIndex * oldCardsPerSlide
+        // Calcula o novo índice de slide para manter o mesmo certificado visível
+        const newSlideIndex = Math.floor(currentCertificateIndex / this.cardsPerSlide)
+        // Garante que não ultrapasse o número total de slides
+        this.currentIndex = Math.min(newSlideIndex, this.totalSlides - 1)
+      }
     }
   },
   mounted() {
-    window.addEventListener('resize', this.handleResize)
+    // Debounced resize handler para melhor performance
+    this.resizeTimeout = null
+    const debouncedResize = () => {
+      clearTimeout(this.resizeTimeout)
+      this.resizeTimeout = setTimeout(() => {
+        this.handleResize()
+      }, 100)
+    }
+    
+    window.addEventListener('resize', debouncedResize)
+    this.updateWindowWidth() // Initialize window width
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize)
+    if (this.resizeTimeout) {
+      clearTimeout(this.resizeTimeout)
+    }
   }
 }
 </script>
@@ -236,18 +286,48 @@ export default {
   margin-bottom: 2rem;
   flex-wrap: wrap;
   gap: 1rem;
+  transition: all 0.3s ease;
 }
 
 .slider-header h3 {
   margin: 0;
   color: var(--primary-color);
   font-size: 1.8rem;
+  transition: font-size 0.3s ease;
 }
 
 .slider-controls {
   display: flex;
   align-items: center;
   gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Responsive header adjustments */
+@media (max-width: 480px) {
+  .slider-header {
+    margin-bottom: 1.5rem;
+  }
+  
+  .slider-header h3 {
+    font-size: 1.4rem;
+  }
+  
+  .slider-controls {
+    gap: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .slider-header h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slider-header h3 {
+    font-size: 2.2rem;
+  }
 }
 
 .slider-btn {
@@ -303,6 +383,29 @@ export default {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  transition: all 0.3s ease;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 767px) {
+  .certificates-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .certificates-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .certificates-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 .certificate-card {
@@ -315,6 +418,30 @@ export default {
   height: 280px;
   display: flex;
   flex-direction: column;
+  min-height: 250px;
+}
+
+/* Responsive card adjustments */
+@media (max-width: 480px) {
+  .certificate-card {
+    padding: 1rem;
+    height: auto;
+    min-height: 220px;
+  }
+}
+
+@media (min-width: 768px) {
+  .certificate-card {
+    height: 300px;
+    padding: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .certificate-card {
+    height: 320px;
+    padding: 2rem;
+  }
 }
 
 .certificate-card:hover {
@@ -468,39 +595,12 @@ export default {
   opacity: 0.7;
 }
 
-/* Responsive Design */
+/* Legacy responsive rules - now handled inline above */
+/* Keeping only the mobile-specific layout changes */
 @media (max-width: 767px) {
   .slider-header {
     flex-direction: column;
     text-align: center;
-  }
-  
-  .slider-header h3 {
-    font-size: 1.5rem;
-  }
-  
-  .certificates-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .certificate-card {
-    min-height: 250px;
-  }
-  
-  .slider-controls {
-    order: -1;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .certificates-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .certificates-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 </style>
