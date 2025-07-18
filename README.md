@@ -1,22 +1,27 @@
 # Portfólio Vue 3
 
-Um portfólio pessoal moderno e responsivo desenvolvido com Vue 3 e Vite.
+🚀 **Portfólio pessoal moderno e responsivo desenvolvido com Vue 3, Vite e GitHub Pages**
 
-## 🚀 Funcionalidades
+## 🌟 Funcionalidades
 
-- **Apresentação Inicial**: Foto de perfil e descrição pessoal
-- **Certificados**: Cards com links para certificados obtidos
-- **Sobre Mim**: Seção detalhada sobre formação, projetos e interesses
-- **Projetos**: Showcase de projetos desenvolvidos com links
+- **Apresentação Inicial**: Foto de perfil e nome animado
+- **Certificados**: Slider interativo com certificados verificáveis
+- **Sobre Mim**: Formação, projetos e interesses + download do diploma
+- **Projetos**: Showcase de projetos desenvolvidos
 - **Contato**: Links diretos para email, WhatsApp, LinkedIn e GitHub
+- **Multilíngue**: Suporte a Português e Inglês
+- **Chatbot**: Assistente virtual integrado
+- **Menu Responsivo**: Hamburguer menu para mobile
 
 ## 🛠️ Tecnologias Utilizadas
 
-- Vue 3
-- Vue Router 4
-- Vite
-- CSS3 com Grid e Flexbox
-- Font Awesome (ícones)
+- **Vue 3** com Composition API
+- **Vue Router 4** para navegação
+- **Vue I18n 9** para internacionalização
+- **Vite** como build tool
+- **CSS3** com Grid, Flexbox e animações
+- **Font Awesome** para ícones
+- **GitHub Actions** para deploy automático
 
 ## 📦 Instalação
 
@@ -32,6 +37,49 @@ Um portfólio pessoal moderno e responsivo desenvolvido com Vue 3 e Vite.
    ```bash
    npm run dev
    ```
+
+4. Acesse: `http://localhost:3000`
+
+## 🌐 Deploy no GitHub Pages
+
+### 🔧 Configuração Inicial
+
+1. **Crie um repositório no GitHub** com o nome `portfolio-vue-3`
+
+2. **Configure o repositório localmente:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/SEU-USUARIO/portfolio-vue-3.git
+   git push -u origin main
+   ```
+
+### ⚙️ Ativar GitHub Pages
+
+1. **Vá para seu repositório no GitHub**
+2. **Settings** → **Pages**
+3. **Source**: GitHub Actions
+4. **Salve as configurações**
+
+### 🚀 Deploy Automático
+
+O projeto já está configurado com GitHub Actions! Após o push:
+
+1. **Automático**: Cada push na branch `main` faz deploy automaticamente
+2. **URL**: `https://SEU-USUARIO.github.io/portfolio-vue-3/`
+3. **Status**: Veja em Actions → Deploy to GitHub Pages
+
+### 📋 Build Manual (Opcional)
+
+Para fazer build localmente:
+
+```bash
+npm run build
+```
+
+Os arquivos serão gerados na pasta `dist/`.
 
 4. Acesse http://localhost:3000
 
