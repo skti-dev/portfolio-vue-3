@@ -4,7 +4,7 @@
     <section id="inicio" class="hero">
       <div class="container">
         <div class="hero-content">
-          <img src="/placeholder-photo.jpg" alt="Minha foto" class="profile-photo">
+          <img :src="profilePicture" alt="Minha foto" class="profile-photo">
           <h1>
             {{ $t('hero.greeting') }}
             <AnimatedName />
@@ -109,6 +109,7 @@
 
 <script>
 import AnimatedName from '../components/AnimatedName.vue'
+import profilePicture from '../assets/images/Foto perfil - recortada.jpg'
 
 export default {
   components: {
@@ -116,6 +117,7 @@ export default {
   },
   data() {
     return {
+      profilePicture,
       certificados: [
         {
           link: 'https://exemplo.com/certificado1'
