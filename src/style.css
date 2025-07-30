@@ -1,3 +1,7 @@
+:root {
+  --primary-color: #667eea;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -671,10 +675,6 @@ body.mobile-menu-open {
     font-size: 1.5rem;
   }
   
-  .main-content {
-    margin-top: 80px;
-  }
-  
   .section {
     padding: 3rem 0;
     margin-bottom: 2rem;
@@ -802,7 +802,7 @@ body.mobile-menu-open {
 /* Mobile specific adjustments */
 @media (max-width: 767px) {
   .main-content {
-    margin-top: 70px;
+    margin-top: 60px;
   }
   
   /* Force hide desktop language toggle on mobile */

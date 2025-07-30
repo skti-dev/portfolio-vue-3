@@ -155,18 +155,27 @@ export default {
           title: 'Desenvolvimento Web Completo',
           type: 'Curso',
           institution: 'Udemy',
-          hours: 40,
-          date: '2023',
+          hours: 108,
+          date: '16/04/2019',
           url: 'https://www.udemy.com/certificate/UC-W7TP88QP/'
         },
         {
           id: 'UC-7d96b532-259e-4002-ba9e-51b217734e53',
-          title: 'JavaScript Moderno e Avançado',
+          title: 'Angular 2 (v15+)',
           type: 'Curso',
           institution: 'Udemy',
-          hours: 25,
-          date: '2023',
+          hours: 29,
+          date: '12/11/2023',
           url: 'https://www.udemy.com/certificate/UC-7d96b532-259e-4002-ba9e-51b217734e53/'
+        },
+        {
+          id: 'UC-31d08543-9b6a-45e1-b2ad-518f1ee353aa',
+          title: 'VueJS 2',
+          type: 'Curso',
+          institution: 'Udemy',
+          hours: 43,
+          date: '13/08/2021',
+          url: 'https://www.udemy.com/certificate/UC-31d08543-9b6a-45e1-b2ad-518f1ee353aa/'
         }
       ]
     }
@@ -183,25 +192,23 @@ export default {
       const cardsPerSlide = this.cardsPerSlide
       
       for (let i = 0; i < this.certificates.length; i += cardsPerSlide) {
-        slides.push(this.certificates.slice(i, i + cardsPerSlide))
+        const slide = this.certificates.slice(i, i + cardsPerSlide)
+        slides.push(slide)
       }
       
       return slides
     },
     totalSlides() {
-      return this.slides.length
+      return Math.ceil(this.certificates.length / this.cardsPerSlide)
     }
   },
   watch: {
-    // Observa mudanças no número de slides e ajusta o índice se necessário
     totalSlides(newTotal) {
       if (this.currentIndex >= newTotal) {
         this.currentIndex = Math.max(0, newTotal - 1)
       }
     },
-    // Observa mudanças na largura da janela para animações suaves
     windowWidth(newWidth, oldWidth) {
-      // Adiciona uma pequena animação quando a tela muda de tamanho
       const slider = this.$refs.sliderTrack
       if (slider) {
         slider.style.transition = 'transform 0.3s ease'
@@ -238,19 +245,14 @@ export default {
       const oldCardsPerSlide = this.cardsPerSlide
       this.updateWindowWidth()
       
-      // Se o número de cards por slide mudou, ajusta o índice atual
       if (oldCardsPerSlide !== this.cardsPerSlide) {
-        // Calcula qual certificado estava sendo exibido
         const currentCertificateIndex = this.currentIndex * oldCardsPerSlide
-        // Calcula o novo índice de slide para manter o mesmo certificado visível
         const newSlideIndex = Math.floor(currentCertificateIndex / this.cardsPerSlide)
-        // Garante que não ultrapasse o número total de slides
         this.currentIndex = Math.min(newSlideIndex, this.totalSlides - 1)
       }
     }
   },
   mounted() {
-    // Debounced resize handler para melhor performance
     this.resizeTimeout = null
     const debouncedResize = () => {
       clearTimeout(this.resizeTimeout)
@@ -260,7 +262,7 @@ export default {
     }
     
     window.addEventListener('resize', debouncedResize)
-    this.updateWindowWidth() // Initialize window width
+    this.updateWindowWidth()
   },
   beforeUnmount() {
     window.removeEventListener('resize', this.handleResize)
@@ -367,6 +369,7 @@ export default {
   overflow: hidden;
   border-radius: 12px;
   position: relative;
+  padding: 5px 0;
 }
 
 .slider-track {
@@ -375,7 +378,8 @@ export default {
 }
 
 .slide {
-  min-width: 100%;
+  width: 100%;
+  max-width: 100%;
   flex-shrink: 0;
 }
 
@@ -491,11 +495,11 @@ export default {
 }
 
 .certificate-institution.alura {
-  color: #0070f3;
+  color: #ffba05;
 }
 
 .certificate-institution.udemy {
-  color: #a435f0;
+  color: #892de1;
 }
 
 .certificate-institution.asimov {
