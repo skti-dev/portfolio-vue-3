@@ -2,7 +2,7 @@ import { ref, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 
 export function useChatbot() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   const isOpen = ref(false);
   const isTyping = ref(false);
@@ -11,7 +11,8 @@ export function useChatbot() {
   const messagesContainer = ref(null);
 
   const API_BASE_URL =
-    import.meta.env.VITE_CHATBOT_API_URL || "https://api.groq.com/openai/v1";
+    import.meta.env.VITE_CHATBOT_API_URL ||
+    "https://good-monster-socially.ngrok-free.app/";
 
   const addMessage = (text, isUser = false) => {
     const message = {

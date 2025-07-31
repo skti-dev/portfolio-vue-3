@@ -126,7 +126,7 @@ ngrok http 3001
 Crie um arquivo `.env` na raiz do projeto Vue:
 
 ```env
-VUE_APP_NGROK_URL=https://sua-url-ngrok.ngrok.io
+VITE_CHATBOT_API_URL=https://sua-url-ngrok.ngrok.io
 ```
 
 ## Funcionalidades
