@@ -1,155 +1,61 @@
 <template>
   <div class="main-content">
-    <!-- Seção de Apresentação Inicial -->
-    <section id="inicio" class="hero">
-      <div class="container">
-        <div class="hero-content">
-          <img :src="profilePicture" alt="Minha foto" class="profile-photo">
-          <h1>
-            {{ $t('hero.greeting') }}
-            <AnimatedName />
-          </h1>
-          <p>{{ $t('hero.description') }}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção de Certificados -->
-    <section id="certificados" class="section">
+    <HeroSection 
+      :profile-picture="assets.profilePicture"
+      @scroll-to="scrollToSection"
+    />
+    
+    <section id="certificados" class="section" data-section="certificates">
       <div class="container">
         <CertificateSlider />
       </div>
     </section>
-
-    <!-- Seção Sobre Mim -->
-    <section id="sobre" class="section">
-      <div class="container">
-        <h2 class="section-title">{{ $t('sections.about') }}</h2>
-        <div class="about">
-          <h3>{{ $t('about.education') }}</h3>
-          <p>{{ $t('about.educationText') }}</p>
-          <div class="education-download">
-            <a 
-              :href="diplomaPdf" 
-              download="RepresentacaoVisualDiplomaDigital-FIAP.pdf"
-              class="download-link"
-              target="_blank"
-            >
-              <i class="fas fa-download"></i>
-              {{ $t('about.downloadDiploma') }}
-            </a>
-          </div>
-          
-          <h3>{{ $t('about.mainProjects') }}</h3>
-          <p>{{ $t('about.mainProjectsText') }}</p>
-          
-          <h3>{{ $t('about.interests') }}</h3>
-          <p>{{ $t('about.interestsText') }}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção de Projetos -->
-    <section id="projetos" class="section">
-      <div class="container">
-        <h2 class="section-title">{{ $t('sections.projects') }}</h2>
-        <div class="cards-grid">
-          <div class="card" v-for="(projeto, index) in projetos" :key="index">
-            <h3>{{ $t(`projects.${index}.title`) }}</h3>
-            <p>{{ $t(`projects.${index}.description`) }}</p>
-            <a :href="projeto.link" target="_blank" class="card-link">
-              <i class="fas fa-external-link-alt"></i>
-              {{ $t('buttons.viewProject') }}
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Seção de Contato -->
-    <section id="contato" class="section">
-      <div class="container">
-        <h2 class="section-title">{{ $t('sections.contact') }}</h2>
-        <div class="contact-grid">
-          <div class="contact-item">
-            <i class="fas fa-envelope"></i>
-            <h3>{{ $t('contact.email') }}</h3>
-            <a :href="'mailto:' + contato.email" class="contact-link">
-              {{ $t('contact.sendEmail') }}
-            </a>
-          </div>
-          
-          <div class="contact-item">
-            <i class="fab fa-whatsapp"></i>
-            <h3>{{ $t('contact.whatsapp') }}</h3>
-            <a :href="'https://wa.me/' + contato.whatsapp" target="_blank" class="contact-link">
-              {{ $t('contact.sendMessage') }}
-            </a>
-          </div>
-          
-          <div class="contact-item">
-            <i class="fab fa-linkedin"></i>
-            <h3>{{ $t('contact.linkedin') }}</h3>
-            <a :href="contato.linkedin" target="_blank" class="contact-link">
-              {{ $t('contact.viewProfile') }}
-            </a>
-          </div>
-          
-          <div class="contact-item">
-            <i class="fab fa-github"></i>
-            <h3>{{ $t('contact.github') }}</h3>
-            <a :href="contato.github" target="_blank" class="contact-link">
-              {{ $t('contact.viewRepositories') }}
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
+    
+    <AboutSection 
+      @download-diploma="handleDownloadDiploma"
+    />
+    
+    <ProjectsSection 
+      :projects="projects"
+      @track-project-click="handleProjectClick"
+    />
+    
+    <ContactSection 
+      :contact="contact"
+      @track-contact-click="handleContactClick"
+    />
   </div>
 </template>
 
-<script>
-import AnimatedName from '../components/AnimatedName.vue'
-import CertificateSlider from '../components/CertificateSlider.vue'
-import profilePicture from '../assets/images/Foto perfil - recortada.jpg'
-import diplomaPdf from '../assets/docs/RepresentacaoVisualDiplomaDigital-FIAP.pdf'
+<script setup>
+import { useI18n } from 'vue-i18n'
+import HeroSection from '@/components/sections/HeroSection.vue'
+import AboutSection from '@/components/sections/AboutSection.vue'
+import ProjectsSection from '@/components/sections/ProjectsSection.vue'
+import ContactSection from '@/components/sections/ContactSection.vue'
+import CertificateSlider from '@/components/CertificateSlider.vue'
+import { usePortfolioData } from '@/composables/usePortfolioData'
+import { usePortfolio } from '@/composables/usePortfolio'
 
-export default {
-  components: {
-    AnimatedName,
-    CertificateSlider
-  },
-  data() {
-    return {
-      profilePicture,
-      diplomaPdf,
-      projetos: [
-        {
-          link: 'https://github.com/skti-dev/coc-insights'
-        },
-        {
-          link: 'https://sonix.com.br/'
-        },
-        {
-          link: 'https://github.com/skti-dev/python-telegram-bot'
-        },
-        {
-          link: 'https://skate-dice.vercel.app/'
-        },
-        {
-          link: 'https://jacgruporj.com.br/'
-        },
-        {
-          link: 'https://github.com/skti-dev'
-        },
-      ],
-      contato: {
-        email: 'augusto.seabra00@gmail.com',
-        whatsapp: '5511951507441',
-        linkedin: 'https://www.linkedin.com/in/augusto-seabra-desenvolvedor/',
-        github: 'https://github.com/skti-dev'
-      }
-    }
-  }
+const { t } = useI18n()
+const { projects, contact, assets } = usePortfolioData()
+const { scrollToSection, downloadFile } = usePortfolio()
+
+const handleDownloadDiploma = () => {
+  downloadFile(
+    assets.diplomaPdf,
+    'RepresentacaoVisualDiplomaDigital-FIAP.pdf',
+    'diploma_download'
+  )
+}
+
+const handleProjectClick = (projectId) => {
+  console.log('Project clicked:', projectId)
+  // Analytics tracking handled in usePortfolio
+}
+
+const handleContactClick = (contactType) => {
+  console.log('Contact clicked:', contactType)
+  // Analytics tracking handled in usePortfolio
 }
 </script>

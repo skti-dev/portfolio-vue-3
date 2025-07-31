@@ -2,6 +2,7 @@
   --primary-color: #667eea;
   --primary-color-rgb: 102, 126, 234;
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --background-secondary: #f0f0f0;
 }
 
 * {
@@ -198,7 +199,6 @@ body.mobile-menu-open {
 /* Section Styles - Mobile First */
 .section {
   padding: 2rem 0;
-  margin-bottom: 1rem;
 }
 
 .section-title {
@@ -684,7 +684,6 @@ body.mobile-menu-open {
   
   .section {
     padding: 3rem 0;
-    margin-bottom: 2rem;
   }
   
   .section-title {

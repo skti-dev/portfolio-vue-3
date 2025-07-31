@@ -15,6 +15,11 @@ export const messages = {
       greeting: "Olá, eu sou",
       description:
         "Desenvolvedor apaixonado por tecnologia, sempre em busca de novos desafios e soluções inovadoras. Bem-vindo ao meu portfólio!",
+      contactMe: "Entre em Contato",
+      viewProjects: "Ver Projetos",
+      profileAlt: "Foto de perfil de Augusto Seabra",
+      viewProjectsLabel: "Ver Projetos",
+      contactLabel: "Entre em contato",
     },
     sections: {
       certificates: "Certificados",
@@ -31,6 +36,7 @@ export const messages = {
       icon: "Ícone do certificado",
     },
     about: {
+      downloadDiplomaLabel: "Baixar Diploma Digital",
       education: "Formação",
       educationText:
         "Formado em Tecnologia em Sistemas para Internet pela FIAP (Faculdade de Informática e Administração Paulista) em 16 de dezembro de 2022. Título obtido: Tecnólogo em Sistemas para Internet.",
@@ -114,6 +120,17 @@ export const messages = {
       you: "Você",
       assistant: "Assistente",
     },
+    errors: {
+      loading: "Carregando...",
+      failed: "Falha ao carregar",
+      tryAgain: "Tentar novamente",
+      downloadFailed: "Falha no download do arquivo",
+    },
+    accessibility: {
+      profileImage: "Foto de perfil de {name}",
+      logoAlt: "Logo do {name}",
+      openInNewTab: "Abre em uma nova aba",
+    },
   },
   en: {
     portfolio: "My Portfolio",
@@ -129,6 +146,11 @@ export const messages = {
       greeting: "Hello, I am",
       description:
         "Developer passionate about technology, always looking for new challenges and innovative solutions. Welcome to my portfolio!",
+      contactMe: "Contact Me",
+      viewProjects: "View Projects",
+      profileAlt: "Profile picture of Augusto Seabra",
+      viewProjectsLabel: "View Projects",
+      contactLabel: "Contact",
     },
     sections: {
       certificates: "Certificates",
@@ -145,6 +167,7 @@ export const messages = {
       icon: "Certificate icon",
     },
     about: {
+      downloadDiplomaLabel: "Download Digital Diploma",
       education: "Education",
       educationText:
         "Graduated in Internet Systems Technology from FIAP (Faculdade de Informática e Administração Paulista) on December 16, 2022. Degree earned: Technologist in Internet Systems.",
@@ -227,6 +250,17 @@ export const messages = {
       open: "Open chat",
       you: "You",
       assistant: "Assistant",
+    },
+    errors: {
+      loading: "Loading...",
+      failed: "Failed to load",
+      tryAgain: "Try again",
+      downloadFailed: "File download failed",
+    },
+    accessibility: {
+      profileImage: "Profile picture of {name}",
+      logoAlt: "{name}'s logo",
+      openInNewTab: "Opens in a new tab",
     },
   },
 };
