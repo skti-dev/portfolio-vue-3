@@ -125,17 +125,23 @@ export default {
       diplomaPdf,
       projetos: [
         {
-          link: 'https://github.com/seuusuario/ecommerce-vue'
+          link: 'https://github.com/skti-dev/coc-insights'
         },
         {
-          link: 'https://github.com/seuusuario/api-nodejs'
+          link: 'https://sonix.com.br/'
         },
         {
-          link: 'https://github.com/seuusuario/dashboard-analytics'
+          link: 'https://github.com/skti-dev/python-telegram-bot'
         },
         {
-          link: 'https://github.com/seuusuario/app-mobile'
-        }
+          link: 'https://skate-dice.vercel.app/'
+        },
+        {
+          link: 'https://jacgruporj.com.br/'
+        },
+        {
+          link: 'https://github.com/skti-dev'
+        },
       ],
       contato: {
         email: 'seuemail@exemplo.com',

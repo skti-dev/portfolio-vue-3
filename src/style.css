@@ -283,6 +283,8 @@ body.mobile-menu-open {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   border: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -301,6 +303,7 @@ body.mobile-menu-open {
   margin-bottom: 1.2rem;
   font-size: 0.9rem;
   line-height: 1.5;
+  flex: 1;
 }
 
 .card-link {
@@ -312,6 +315,7 @@ body.mobile-menu-open {
   text-decoration: none;
   transition: opacity 0.3s;
   font-size: 0.9rem;
+  align-self: flex-end;
 }
 
 .card-link:hover {
@@ -338,6 +342,7 @@ body.mobile-menu-open {
   color: #666;
   line-height: 1.7;
   font-size: 0.95rem;
+  white-space: break-spaces;
 }
 
 /* Education Download Link */
