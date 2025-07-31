@@ -28,6 +28,7 @@ export const messages = {
       previous: "Anterior",
       next: "Próximo",
       goToSlide: "Ir para slide",
+      icon: "Ícone do certificado",
     },
     about: {
       education: "Formação",
@@ -135,6 +136,7 @@ export const messages = {
       previous: "Previous",
       next: "Next",
       goToSlide: "Go to slide",
+      icon: "Certificate icon",
     },
     about: {
       education: "Education",

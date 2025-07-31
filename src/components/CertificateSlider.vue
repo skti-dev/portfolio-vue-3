@@ -1,29 +1,11 @@
 <template>
   <div class="certificate-slider">
-    <div class="slider-header">
-      <h3>{{ $t('certificates.title') }}</h3>
-      <div class="slider-controls">
-        <button 
-          class="slider-btn prev" 
-          @click="previousSlide" 
-          :disabled="currentIndex === 0"
-          :aria-label="$t('certificates.previous')"
-        >
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <span class="slider-counter">
-          {{ currentIndex + 1 }} / {{ totalSlides }}
-        </span>
-        <button 
-          class="slider-btn next" 
-          @click="nextSlide" 
-          :disabled="currentIndex >= totalSlides - 1"
-          :aria-label="$t('certificates.next')"
-        >
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
+    <SliderHeader 
+      :current-index="currentIndex"
+      :total-slides="totalSlides"
+      @previous="previousSlide"
+      @next="nextSlide"
+    />
     
     <div class="slider-container">
       <div 
@@ -37,240 +19,75 @@
           class="slide"
         >
           <div class="certificates-grid">
-            <div 
+            <CertificateCard
               v-for="certificate in slide" 
-              :key="certificate.id" 
-              class="certificate-card"
-            >
-              <div class="certificate-header">
-                <div class="certificate-icon">
-                  <i class="fas fa-certificate"></i>
-                </div>
-                <div class="certificate-type" :class="{ trilha: certificate.type === 'Trilha' }">{{ certificate.type }}</div>
-              </div>
-              
-              <div class="certificate-body">
-                <h4 class="certificate-title">{{ certificate.title }}</h4>
-                <p class="certificate-institution" :class="getInstitutionClass(certificate.institution)">{{ certificate.institution }}</p>
-                <div class="certificate-details">
-                  <span class="certificate-hours">{{ certificate.hours }}h</span>
-                  <span class="certificate-date">{{ certificate.date }}</span>
-                </div>
-              </div>
-              
-              <div class="certificate-footer">
-                <a 
-                  :href="certificate.url" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="certificate-link"
-                >
-                  {{ $t('certificates.verify') }}
-                  <i class="fas fa-external-link-alt"></i>
-                </a>
-              </div>
-            </div>
+              :key="certificate.id"
+              :certificate="certificate"
+            />
           </div>
         </div>
       </div>
     </div>
     
-    <div class="slider-dots">
-      <button
-        v-for="(slide, index) in slides"
-        :key="index"
-        class="dot"
-        :class="{ active: index === currentIndex }"
-        @click="goToSlide(index)"
-        :aria-label="`${$t('certificates.goToSlide')} ${index + 1}`"
-      ></button>
-    </div>
+    <SliderDots
+      :total-slides="totalSlides"
+      :current-index="currentIndex"
+      @go-to-slide="goToSlide"
+    />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CertificateSlider',
-  data() {
-    return {
-      currentIndex: 0,
-      windowWidth: window.innerWidth,
-      certificates: [
-        {
-          id: '0049aa12-2d4f-492e-9957-86254c66bb3c',
-          title: 'Aplicações IA: Criação de Agents com LangChain',
-          type: 'Trilha',
-          institution: 'Asimov Academy',
-          hours: 70,
-          date: '29/05/2025',
-          url: 'https://hub.asimov.academy/validar-certificado/0049aa12-2d4f-492e-9957-86254c66bb3c/'
-        },
-        {
-          id: '0a724ce3-f374-45de-9a84-829a2f3961d6',
-          title: 'Engenharia de Prompts',
-          type: 'Curso',
-          institution: 'Asimov Academy',
-          hours: 5,
-          date: '20/05/2025',
-          url: 'https://hub.asimov.academy/validar-certificado/0a724ce3-f374-45de-9a84-829a2f3961d6/'
-        },
-        {
-          id: '42ba4c8d-209a-4c04-956d-e9b621733abb',
-          title: 'Criando Multi Agent Systems com CrewAI',
-          type: 'Curso',
-          institution: 'Asimov Academy',
-          hours: 7,
-          date: '09/07/2025',
-          url: 'https://hub.asimov.academy/validar-certificado/42ba4c8d-209a-4c04-956d-e9b621733abb/'
-        },
-        {
-          id: 'd55c88f4-5393-4c0d-9075-bac6cceb524a',
-          title: 'Aplicações de IA com LangChain',
-          type: 'Curso',
-          institution: 'Asimov Academy',
-          hours: 16,
-          date: '22/05/2025',
-          url: 'https://hub.asimov.academy/validar-certificado/d55c88f4-5393-4c0d-9075-bac6cceb524a/'
-        },
-        {
-          id: '052debca-7fa6-4837-bcab-074f786364b1',
-          title: 'Agents de IA com Python e LangChain',
-          type: 'Curso',
-          institution: 'Asimov Academy',
-          hours: 13,
-          date: '29/05/2025',
-          url: 'https://hub.asimov.academy/validar-certificado/052debca-7fa6-4837-bcab-074f786364b1/'
-        },
-        {
-          id: '31941565-cfc0-44b0-8dbb-0a9f545471da',
-          title: 'React: Abstraindo seu CSS com Styled Components',
-          type: 'Curso',
-          institution: 'Alura',
-          hours: 6,
-          date: '17/11/2022',
-          url: 'https://cursos.alura.com.br/certificate/31941565-cfc0-44b0-8dbb-0a9f545471da'
-        },
-        {
-          id: 'UC-W7TP88QP',
-          title: 'Desenvolvimento Web Completo',
-          type: 'Curso',
-          institution: 'Udemy',
-          hours: 108,
-          date: '16/04/2019',
-          url: 'https://www.udemy.com/certificate/UC-W7TP88QP/'
-        },
-        {
-          id: 'UC-7d96b532-259e-4002-ba9e-51b217734e53',
-          title: 'Angular 2 (v15+)',
-          type: 'Curso',
-          institution: 'Udemy',
-          hours: 29,
-          date: '12/11/2023',
-          url: 'https://www.udemy.com/certificate/UC-7d96b532-259e-4002-ba9e-51b217734e53/'
-        },
-        {
-          id: 'UC-31d08543-9b6a-45e1-b2ad-518f1ee353aa',
-          title: 'VueJS 2',
-          type: 'Curso',
-          institution: 'Udemy',
-          hours: 43,
-          date: '13/08/2021',
-          url: 'https://www.udemy.com/certificate/UC-31d08543-9b6a-45e1-b2ad-518f1ee353aa/'
-        }
-      ]
-    }
-  },
-  computed: {
-    cardsPerSlide() {
-      // Responsivo baseado na largura atual da janela
-      if (this.windowWidth < 768) return 1
-      if (this.windowWidth < 1024) return 2
-      return 3
-    },
-    slides() {
-      const slides = []
-      const cardsPerSlide = this.cardsPerSlide
-      
-      for (let i = 0; i < this.certificates.length; i += cardsPerSlide) {
-        const slide = this.certificates.slice(i, i + cardsPerSlide)
-        slides.push(slide)
-      }
-      
-      return slides
-    },
-    totalSlides() {
-      return Math.ceil(this.certificates.length / this.cardsPerSlide)
-    }
-  },
-  watch: {
-    totalSlides(newTotal) {
-      if (this.currentIndex >= newTotal) {
-        this.currentIndex = Math.max(0, newTotal - 1)
-      }
-    },
-    windowWidth(newWidth, oldWidth) {
-      const slider = this.$refs.sliderTrack
-      if (slider) {
-        slider.style.transition = 'transform 0.3s ease'
-        setTimeout(() => {
-          slider.style.transition = 'transform 0.4s ease'
-        }, 300)
-      }
-    }
-  },
-  methods: {
-    updateWindowWidth() {
-      this.windowWidth = window.innerWidth
-    },
-    nextSlide() {
-      if (this.currentIndex < this.totalSlides - 1) {
-        this.currentIndex++
-      }
-    },
-    previousSlide() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--
-      }
-    },
-    goToSlide(index) {
-      this.currentIndex = index
-    },
-    getInstitutionClass(institution) {
-      if (institution.includes('Asimov')) return 'asimov'
-      if (institution.includes('Alura')) return 'alura'
-      if (institution.includes('Udemy')) return 'udemy'
-      return ''
-    },
-    handleResize() {
-      const oldCardsPerSlide = this.cardsPerSlide
-      this.updateWindowWidth()
-      
-      if (oldCardsPerSlide !== this.cardsPerSlide) {
-        const currentCertificateIndex = this.currentIndex * oldCardsPerSlide
-        const newSlideIndex = Math.floor(currentCertificateIndex / this.cardsPerSlide)
-        this.currentIndex = Math.min(newSlideIndex, this.totalSlides - 1)
-      }
-    }
-  },
-  mounted() {
-    this.resizeTimeout = null
-    const debouncedResize = () => {
-      clearTimeout(this.resizeTimeout)
-      this.resizeTimeout = setTimeout(() => {
-        this.handleResize()
-      }, 100)
-    }
-    
-    window.addEventListener('resize', debouncedResize)
-    this.updateWindowWidth()
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.handleResize)
-    if (this.resizeTimeout) {
-      clearTimeout(this.resizeTimeout)
-    }
+<script setup>
+import { computed, ref, watch } from 'vue'
+import SliderHeader from './SliderHeader.vue'
+import CertificateCard from './CertificateCard.vue'
+import SliderDots from './SliderDots.vue'
+import { useCertificateData } from '@/composables/useCertificateData'
+import { useSlider } from '@/composables/useSlider'
+import { useWindowSize } from '@/composables/useWindowSize'
+
+const { certificates } = useCertificateData()
+const { width: windowWidth } = useWindowSize()
+
+const sliderTrack = ref(null)
+
+const cardsPerSlide = computed(() => {
+  if (windowWidth.value < 768) return 1
+  if (windowWidth.value < 1024) return 2
+  return 3
+})
+
+const slides = computed(() => {
+  const slides = []
+  const cardsPerSlideValue = cardsPerSlide.value
+  
+  for (let i = 0; i < certificates.value.length; i += cardsPerSlideValue) {
+    const slide = certificates.value.slice(i, i + cardsPerSlideValue)
+    slides.push(slide)
   }
-}
+  
+  return slides
+})
+
+const totalSlides = computed(() => slides.value.length)
+
+const {
+  currentIndex,
+  nextSlide,
+  previousSlide,
+  goToSlide
+} = useSlider(totalSlides)
+
+// Gerenciar transições suaves durante redimensionamento
+watch(windowWidth, () => {
+  const slider = sliderTrack.value
+  if (slider) {
+    slider.style.transition = 'transform 0.3s ease'
+    setTimeout(() => {
+      slider.style.transition = 'transform 0.4s ease'
+    }, 300)
+  }
+})
 </script>
 
 <style scoped>
@@ -279,90 +96,6 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
-}
-
-.slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-  transition: all 0.3s ease;
-}
-
-.slider-header h3 {
-  margin: 0;
-  color: var(--primary-color);
-  font-size: 1.8rem;
-  transition: font-size 0.3s ease;
-}
-
-.slider-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transition: all 0.3s ease;
-}
-
-/* Responsive header adjustments */
-@media (max-width: 480px) {
-  .slider-header {
-    margin-bottom: 1.5rem;
-  }
-  
-  .slider-header h3 {
-    font-size: 1.4rem;
-  }
-  
-  .slider-controls {
-    gap: 0.75rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .slider-header h3 {
-    font-size: 2rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .slider-header h3 {
-    font-size: 2.2rem;
-  }
-}
-
-.slider-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 2px solid var(--primary-color);
-  background: transparent;
-  color: var(--primary-color);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.slider-btn:hover:not(:disabled) {
-  background: var(--primary-color);
-  color: white;
-  transform: scale(1.1);
-}
-
-.slider-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.slider-counter {
-  font-weight: 600;
-  color: var(--text-color);
-  min-width: 60px;
-  text-align: center;
 }
 
 .slider-container {
@@ -390,7 +123,6 @@ export default {
   transition: all 0.3s ease;
 }
 
-/* Responsive grid adjustments */
 @media (max-width: 767px) {
   .certificates-grid {
     grid-template-columns: 1fr;
@@ -409,202 +141,6 @@ export default {
   .certificates-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-  }
-}
-
-.certificate-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-  border: 1px solid #e0e0e0;
-  height: 280px;
-  display: flex;
-  flex-direction: column;
-  min-height: 250px;
-}
-
-/* Responsive card adjustments */
-@media (max-width: 480px) {
-  .certificate-card {
-    padding: 1rem;
-    height: auto;
-    min-height: 220px;
-  }
-}
-
-@media (min-width: 768px) {
-  .certificate-card {
-    height: 300px;
-    padding: 1.75rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .certificate-card {
-    height: 320px;
-    padding: 2rem;
-  }
-}
-
-.certificate-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-.certificate-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.certificate-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.2rem;
-}
-
-.certificate-type {
-  background: #f0f9ff;
-  color: #0369a1;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.certificate-type.trilha {
-  background: #fef3c7;
-  color: #d97706;
-}
-
-.certificate-institution {
-  color: var(--primary-color);
-  font-weight: 600;
-  margin: 0 0 1rem 0;
-  font-size: 0.95rem;
-}
-
-.certificate-institution.alura {
-  color: #ffba05;
-}
-
-.certificate-institution.udemy {
-  color: #892de1;
-}
-
-.certificate-institution.asimov {
-  color: var(--primary-color);
-}
-
-.certificate-body {
-  flex: 1;
-  margin-bottom: 1rem;
-}
-
-.certificate-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text-color);
-  margin: 0 0 0.5rem 0;
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.certificate-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: auto;
-}
-
-.certificate-hours {
-  background: #f3f4f6;
-  color: #374151;
-  padding: 0.25rem 0.75rem;
-  border-radius: 15px;
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
-.certificate-date {
-  color: #6b7280;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.certificate-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid #f3f4f6;
-}
-
-.certificate-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.certificate-link:hover {
-  color: #4c1d95;
-  transform: translateX(2px);
-}
-
-.certificate-link i {
-  font-size: 0.8rem;
-}
-
-.slider-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  background: #d1d5db;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.dot.active {
-  background: var(--primary-color);
-  transform: scale(1.2);
-}
-
-.dot:hover {
-  background: var(--primary-color);
-  opacity: 0.7;
-}
-
-/* Legacy responsive rules - now handled inline above */
-/* Keeping only the mobile-specific layout changes */
-@media (max-width: 767px) {
-  .slider-header {
-    flex-direction: column;
-    text-align: center;
   }
 }
 </style>
