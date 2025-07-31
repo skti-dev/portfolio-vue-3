@@ -47,7 +47,7 @@ const toggleAriaLabel = computed(() => {
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  z-index: 1001;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +60,7 @@ const toggleAriaLabel = computed(() => {
 }
 
 .chatbot-toggle:focus {
-  outline: 3px solid rgba(var(--primary-color-rgb), 0.3);
+  outline: 3px solid rgba(var(--purple-rgb), 0.3);
   outline-offset: 2px;
 }
 

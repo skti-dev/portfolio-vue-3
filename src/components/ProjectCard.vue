@@ -129,7 +129,7 @@ defineEmits(['track-click'])
 }
 
 .card-link:focus {
-  outline: 3px solid rgba(var(--primary-color-rgb), 0.3);
+  outline: 3px solid rgba(var(--purple-rgb), 0.3);
   outline-offset: 2px;
 }
 

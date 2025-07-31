@@ -152,7 +152,7 @@ O projeto foi desenvolvido com design responsivo e se adapta a diferentes tamanh
 
 O projeto usa um gradiente roxo/azul como tema principal:
 
-- Primária: `#667eea` → `#764ba2`
+- Primária: `var(--primary-color)` → `#764ba2`
 - Fundo: `#f8f9fa`
 - Texto: `#333`
 

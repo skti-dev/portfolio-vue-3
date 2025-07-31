@@ -114,7 +114,7 @@ const handleSendMessage = async () => {
     
     setTimeout(() => {
       isTyping.value = false
-      addMessage(error.message || t('chatbot.error'))
+      addMessage(t('chatbot.error'))
     }, 1000)
   }
 }
@@ -237,7 +237,7 @@ onUnmounted(() => {
 
 .message-input:focus {
   border-color: var(--primary-gradient);
-  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+  box-shadow: 0 0 0 3px rgba(var(--purple-rgb), 0.1);
 }
 
 .message-input:disabled {
@@ -272,40 +272,190 @@ onUnmounted(() => {
 }
 
 .chatbot-send:focus {
-  outline: 3px solid rgba(var(--primary-color-rgb), 0.3);
+  outline: 3px solid rgba(var(--purple-rgb), 0.3);
   outline-offset: 2px;
 }
 
-@media (max-width: 768px) {
+/* Tablet responsivo */
+@media (max-width: 1024px) {
   .chatbot-container {
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 15px;
   }
   
   .chatbot-window {
-    width: 320px;
-    height: 450px;
-    bottom: 70px;
+    width: 340px;
+    height: 480px;
   }
 }
 
-@media (max-width: 480px) {
+/* Mobile médio */
+@media (max-width: 768px) {
+  .chatbot-container {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+  
   .chatbot-window {
-    width: 280px;
-    height: 400px;
-    right: -10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100svw;
+    height: 100svh;
+    transform: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
   }
   
   .chatbot-header {
-    padding: 0.75rem;
+    padding: 1rem 1.5rem;
+    min-height: 60px;
+  }
+  
+  .chatbot-header h3 {
+    font-size: 1.2rem;
   }
   
   .chatbot-messages {
-    padding: 0.75rem;
+    padding: 1rem 1.5rem;
+    /* Ajusta altura considerando header e input */
+    height: calc(100svh - 120px - env(safe-area-inset-bottom));
   }
   
   .chatbot-input {
-    padding: 0.75rem;
+    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom));
+    min-height: 80px;
+  }
+  
+  .message-input {
+    font-size: 16px; /* Previne zoom no iOS */
+    padding: 0.875rem 1.25rem;
+  }
+  
+  .chatbot-send {
+    width: 48px;
+    height: 48px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile pequeno */
+@media (max-width: 480px) {
+  .chatbot-header {
+    padding: 0.875rem 1rem;
+    min-height: 56px;
+  }
+  
+  .chatbot-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .chatbot-messages {
+    padding: 0.875rem 1rem;
+    height: calc(100svh - 112px - env(safe-area-inset-bottom));
+  }
+  
+  .chatbot-input {
+    padding: 0.875rem 1rem calc(0.875rem + env(safe-area-inset-bottom));
+    min-height: 76px;
+  }
+  
+  .message-input {
+    font-size: 16px;
+    padding: 0.75rem 1rem;
+  }
+  
+  .chatbot-send {
+    width: 44px;
+    height: 44px;
+    font-size: 1rem;
+  }
+}
+
+/* Orientação landscape no mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .chatbot-messages {
+    height: calc(100svh - 100px - env(safe-area-inset-bottom));
+  }
+  
+  .chatbot-header {
+    min-height: 50px;
+    padding: 0.75rem 1.5rem;
+  }
+  
+  .chatbot-input {
+    min-height: 70px;
+    padding: 0.75rem 1.5rem calc(0.75rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Suporte para notch e safe areas */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    .chatbot-header {
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
+    
+    .chatbot-input {
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .chatbot-window {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Modo escuro */
+@media (prefers-color-scheme: dark) {
+  .chatbot-window {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .chatbot-input {
+    border-top-color: #374151;
+  }
+  
+  .message-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+  }
+  
+  .message-input:disabled {
+    background: #4b5563;
+  }
+  
+  .chatbot-messages::-webkit-scrollbar-track {
+    background: #374151;
+  }
+  
+  .chatbot-messages::-webkit-scrollbar-thumb {
+    background: #6b7280;
+  }
+}
+
+/* Reduzir movimento para usuários sensíveis */
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-send {
+    transition: none;
+  }
+  
+  .chatbot-send:hover:not(:disabled) {
+    transform: none;
+  }
+  
+  .chatbot-messages {
+    scroll-behavior: auto;
   }
 }
 </style>

@@ -1,9 +1,11 @@
 :root {
-  --primary-color: #667eea;
-  --primary-color-rgb: 102, 126, 234;
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --primary-color: #355C7D;
+  --secondary-color: #C06C84;
+  --primary-gradient: linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);
   --background-secondary: #f0f0f0;
+  --purple-rgb: 102, 126, 234;
 }
+
 
 * {
   margin: 0;
@@ -14,7 +16,7 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
-  color: #333;
+  color: #212121;
   background-color: #f8f9fa;
   overflow-x: hidden;
   transition: overflow 0.3s ease;
@@ -475,6 +477,7 @@ body.mobile-menu-open {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   overflow: hidden;
   transition: opacity 0.3s, transform 0.3s;
+  z-index: 1002;
 }
 
 .chatbot-window.hidden {

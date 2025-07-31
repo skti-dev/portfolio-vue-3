@@ -79,7 +79,7 @@ const formatTimestamp = (timestamp) => {
 }
 
 .user-message .message-content {
-  background: var(--primary-gradient);
+  background: var(--primary-color);
   color: white;
   border-radius: 1rem 0.25rem 1rem 1rem;
 }

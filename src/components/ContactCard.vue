@@ -85,7 +85,6 @@ const isExternal = computed(() => {
   width: 80px;
   height: 80px;
   margin: 0 auto 1.5rem;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -121,7 +120,7 @@ const isExternal = computed(() => {
 }
 
 .contact-link:focus {
-  outline: 3px solid rgba(var(--primary-color-rgb), 0.3);
+  outline: 3px solid rgba(var(--purple-rgb), 0.3);
   outline-offset: 2px;
 }
 

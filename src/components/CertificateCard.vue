@@ -119,7 +119,7 @@ const formatDatetime = (dateString) => {
 .certificate-icon {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, #764ba2 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
