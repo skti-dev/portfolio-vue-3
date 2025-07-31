@@ -443,6 +443,8 @@ body.mobile-menu-open {
   bottom: 20px;
   right: 20px;
   z-index: 1001;
+  width: 0;
+  height: 0;
 }
 
 .chatbot-toggle {
