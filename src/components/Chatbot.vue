@@ -1,193 +1,311 @@
 <template>
   <div class="chatbot-container">
     <!-- Chatbot Window -->
-    <div class="chatbot-window" :class="{ hidden: !isOpen }">
-      <div class="chatbot-header">
-        <h3>{{ $t('chatbot.title') }}</h3>
-        <button class="chatbot-close" @click="toggleChat">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="chatbot-messages" ref="messagesContainer">
-        <div 
-          v-for="message in messages" 
-          :key="message.id"
-          class="chatbot-message"
-          :class="{ user: message.isUser }"
+    <dialog 
+      v-show="isOpen"
+      class="chatbot-window" 
+      aria-labelledby="chatbot-title"
+      aria-live="polite"
+      open
+    >
+      <header class="chatbot-header">
+        <h3 id="chatbot-title">{{ $t('chatbot.title') }}</h3>
+        <button 
+          class="chatbot-close" 
+          @click="toggleChat"
+          :aria-label="$t('chatbot.close')"
+          type="button"
         >
-          <div class="avatar">
-            {{ message.isUser ? 'U' : 'AI' }}
-          </div>
-          <div class="content">
-            {{ message.text }}
-          </div>
-        </div>
-        
-        <!-- Typing indicator -->
-        <div v-if="isTyping" class="chatbot-message">
-          <div class="avatar">AI</div>
-          <div class="content">
-            <div class="typing-indicator">
-              <div class="typing-dot"></div>
-              <div class="typing-dot"></div>
-              <div class="typing-dot"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="chatbot-input">
-        <input 
-          v-model="currentMessage"
-          @keyup.enter="sendMessage"
-          :placeholder="$t('chatbot.placeholder')"
-          :disabled="isTyping"
-        />
-        <button class="chatbot-send" @click="sendMessage" :disabled="isTyping">
-          <i class="fas fa-paper-plane"></i>
+          <i class="fas fa-times" aria-hidden="true"></i>
         </button>
-      </div>
-    </div>
+      </header>
+      
+      <main 
+        class="chatbot-messages" 
+        ref="messagesContainer"
+        role="log"
+        aria-live="polite"
+        aria-label="Chat messages"
+      >
+        <ChatMessage
+          v-for="message in messages"
+          :key="message.id"
+          :message="message"
+        />
+        
+        <TypingIndicator v-if="isTyping" />
+      </main>
+      
+      <footer class="chatbot-input">
+        <form @submit.prevent="handleSendMessage" class="input-form">
+          <input 
+            v-model="currentMessage"
+            :placeholder="$t('chatbot.placeholder')"
+            :disabled="isTyping"
+            class="message-input"
+            type="text"
+            aria-label="Type your message"
+            maxlength="500"
+          />
+          <button 
+            type="submit"
+            class="chatbot-send" 
+            :disabled="isTyping || !currentMessage.trim()"
+            :aria-label="$t('chatbot.send')"
+          >
+            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+          </button>
+        </form>
+      </footer>
+    </dialog>
     
     <!-- Toggle Button -->
-    <button class="chatbot-toggle" @click="toggleChat">
-      <i class="fas fa-comment" v-if="!isOpen"></i>
-      <i class="fas fa-times" v-else></i>
-    </button>
+    <ChatbotToggle
+      :is-open="isOpen"
+      @toggle="toggleChat"
+    />
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isOpen: false,
-      isTyping: false,
-      currentMessage: '',
-      messages: [],
-      ngrokUrl: 'https://api.groq.com/openai/v1'
-    }
-  },
-  mounted() {
-    this.initializeChat()
-  },
-  methods: {
-    toggleChat() {
-      this.isOpen = !this.isOpen
-      if (this.isOpen && this.messages.length === 0) {
-        this.addBotMessage(this.$t('chatbot.welcome'))
-      }
-    },
-    
-    initializeChat() {
-      // Welcome message will be added when chat opens
-    },
-    
-    async sendMessage() {
-      if (!this.currentMessage.trim() || this.isTyping) return
-      
-      const userMessage = this.currentMessage.trim()
-      this.addUserMessage(userMessage)
-      this.currentMessage = ''
-      
-      this.isTyping = true
-      
-      try {
-        // Get page content for context
-        const pageContent = this.getPageContent()
-        
-        const response = await fetch(`${this.ngrokUrl}/api/chat`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: userMessage,
-            language: this.$i18n.locale,
-            context: pageContent
-          })
-        })
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-        
-        const data = await response.json()
-        
-        setTimeout(() => {
-          this.isTyping = false
-          this.addBotMessage(data.response || this.$t('chatbot.error'))
-        }, 1000)
-        
-      } catch (error) {
-        console.error('Error:', error)
-        setTimeout(() => {
-          this.isTyping = false
-          this.addBotMessage(this.$t('chatbot.error'))
-        }, 1000)
-      }
-    },
-    
-    addUserMessage(text) {
-      this.messages.push({
-        id: Date.now(),
-        text,
-        isUser: true
-      })
-      this.scrollToBottom()
-    },
-    
-    addBotMessage(text) {
-      this.messages.push({
-        id: Date.now(),
-        text,
-        isUser: false
-      })
-      this.scrollToBottom()
-    },
-    
-    scrollToBottom() {
-      this.$nextTick(() => {
-        const container = this.$refs.messagesContainer
-        if (container) {
-          container.scrollTop = container.scrollHeight
-        }
-      })
-    },
-    
-    getPageContent() {
-      // Extract text content from the page for context
-      const sections = document.querySelectorAll('.section')
-      let content = []
-      
-      sections.forEach(section => {
-        const title = section.querySelector('.section-title')?.textContent
-        const text = section.textContent
-        
-        if (title && text) {
-          content.push({
-            section: title.trim(),
-            content: text.replace(/\s+/g, ' ').trim().substring(0, 500)
-          })
-        }
-      })
-      
-      return {
-        language: this.$i18n.locale,
-        sections: content,
-        url: window.location.href
-      }
-    }
-  },
+<script setup>
+import { watch, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import ChatMessage from './ChatMessage.vue'
+import TypingIndicator from './TypingIndicator.vue'
+import ChatbotToggle from './ChatbotToggle.vue'
+import { useChatbot } from '@/composables/useChatbot'
+import { useChatAPI } from '@/composables/useChatAPI'
+
+const { t, locale } = useI18n()
+
+const {
+  isOpen,
+  isTyping,
+  currentMessage,
+  messages,
+  messagesContainer,
+  addMessage,
+  toggleChat,
+  API_BASE_URL
+} = useChatbot()
+
+const { sendMessage } = useChatAPI(API_BASE_URL)
+
+const handleSendMessage = async () => {
+  if (!currentMessage.value.trim() || isTyping.value) return
   
-  watch: {
-    '$i18n.locale'() {
-      // Update welcome message when language changes
-      if (this.messages.length > 0 && !this.messages[0].isUser) {
-        this.messages[0].text = this.$t('chatbot.welcome')
-      }
-    }
+  const userMessage = currentMessage.value.trim()
+  addMessage(userMessage, true)
+  currentMessage.value = ''
+  
+  isTyping.value = true
+  
+  try {
+    const response = await sendMessage(userMessage)
+    
+    // Simulate typing delay for better UX
+    setTimeout(() => {
+      isTyping.value = false
+      addMessage(response)
+    }, Math.random() * 1000 + 500) // 0.5-1.5s delay
+    
+  } catch (error) {
+    console.error('Chatbot error:', error)
+    
+    setTimeout(() => {
+      isTyping.value = false
+      addMessage(error.message || t('chatbot.error'))
+    }, 1000)
   }
 }
+
+// Update welcome message when language changes
+watch(locale, () => {
+  if (messages.value.length > 0 && !messages.value[0].isUser) {
+    messages.value[0].text = t('chatbot.welcome')
+  }
+}, { immediate: false })
+
+// Cleanup on unmount
+onUnmounted(() => {
+  isTyping.value = false
+})
 </script>
+
+<style scoped>
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chatbot-window {
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+  transform: translateX(-350px);
+  width: 350px;
+  height: 500px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.chatbot-header {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chatbot-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.chatbot-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.chatbot-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chatbot-close:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  scroll-behavior: smooth;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.chatbot-input {
+  padding: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.input-form {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.message-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 25px;
+  outline: none;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+}
+
+.message-input:focus {
+  border-color: var(--primary-gradient);
+  box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.message-input:disabled {
+  opacity: 0.6;
+  background: #f9fafb;
+}
+
+.chatbot-send {
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  font-size: 1rem;
+}
+
+.chatbot-send:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--primary-gradient) 85%, black);
+  transform: scale(1.05);
+}
+
+.chatbot-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.chatbot-send:focus {
+  outline: 3px solid rgba(var(--primary-color-rgb), 0.3);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .chatbot-container {
+    bottom: 10px;
+    right: 10px;
+  }
+  
+  .chatbot-window {
+    width: 320px;
+    height: 450px;
+    bottom: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot-window {
+    width: 280px;
+    height: 400px;
+    right: -10px;
+  }
+  
+  .chatbot-header {
+    padding: 0.75rem;
+  }
+  
+  .chatbot-messages {
+    padding: 0.75rem;
+  }
+  
+  .chatbot-input {
+    padding: 0.75rem;
+  }
+}
+</style>
