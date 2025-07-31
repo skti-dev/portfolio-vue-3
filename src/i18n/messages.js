@@ -98,7 +98,7 @@ export const messages = {
       viewProject: "Ver Projeto",
     },
     footer: {
-      copyright: "© 2025 Meu Portfólio. Todos os direitos reservados.",
+      copyright: "Portfólio de Augusto Seabra",
     },
     chatbot: {
       title: "Assistente Virtual",
@@ -205,7 +205,7 @@ export const messages = {
       viewProject: "View Project",
     },
     footer: {
-      copyright: "© 2025 My Portfolio. All rights reserved.",
+      copyright: "Portfolio of Augusto Seabra",
     },
     chatbot: {
       title: "Virtual Assistant",

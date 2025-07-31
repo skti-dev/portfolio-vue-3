@@ -144,10 +144,10 @@ export default {
         },
       ],
       contato: {
-        email: 'seuemail@exemplo.com',
-        whatsapp: '5511999999999', // Formato: código do país + DDD + número
-        linkedin: 'https://linkedin.com/in/seuusuario',
-        github: 'https://github.com/seuusuario'
+        email: 'augusto.seabra00@gmail.com',
+        whatsapp: '5511951507441',
+        linkedin: 'https://www.linkedin.com/in/augusto-seabra-desenvolvedor/',
+        github: 'https://github.com/skti-dev'
       }
     }
   }
