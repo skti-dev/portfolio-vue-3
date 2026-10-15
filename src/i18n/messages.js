@@ -2,7 +2,8 @@ const name = "Augusto Seabra";
 
 export const messages = {
   pt: {
-    portfolio: "Meu Portfólio",
+    portfolio: "AS - Portfólio",
+    backToTop: "Voltar ao topo",
     name,
     nav: {
       home: "Início",
@@ -143,7 +144,8 @@ Freelancer: projetos completos direto com o cliente e landing pages para agênci
     },
   },
   en: {
-    portfolio: "My Portfolio",
+    portfolio: "AS - Portfolio",
+    backToTop: "Back to top",
     name,
     nav: {
       home: "Home",

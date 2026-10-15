@@ -1,10 +1,34 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { usePortfolioData } from "./usePortfolioData";
+
+const formatPhone = (digits) =>
+  digits.replace(/^(\d{2})(\d{2})(\d{5})(\d{4})$/, "+$1 ($2) $3-$4");
 
 export function useChatAPI(apiBaseUrl) {
   const { locale, t } = useI18n();
   const isLoading = ref(false);
   const error = ref(null);
+  const { contact } = usePortfolioData();
+
+  // Contact details aren't present as text on the page, so they're sent explicitly.
+  // Placed first so the worker's context truncation never drops them.
+  const getContactSection = () => {
+    const c = contact.value;
+    const isPt = locale.value !== "en";
+    return {
+      section: isPt ? "Contato" : "Contact",
+      content: [
+        `Email: [${c.email}](mailto:${c.email})`,
+        `WhatsApp: [${formatPhone(c.whatsapp)}](https://wa.me/${c.whatsapp})`,
+        `LinkedIn: ${c.linkedin}`,
+        `GitHub: ${c.github}`,
+        isPt
+          ? "Ao informar contatos, use links em markdown."
+          : "When sharing contact details, use markdown links.",
+      ].join("\n"),
+    };
+  };
 
   const getPageContext = () => {
     try {
@@ -26,6 +50,8 @@ export function useChatAPI(apiBaseUrl) {
         })
         .filter((item) => item.content.length > 0);
 
+      content.unshift(getContactSection());
+
       return {
         language: locale.value,
         sections: content,
@@ -36,7 +62,7 @@ export function useChatAPI(apiBaseUrl) {
       console.warn("Failed to extract page context:", err);
       return {
         language: locale.value,
-        sections: [],
+        sections: [getContactSection()],
         url: window.location.href,
       };
     }

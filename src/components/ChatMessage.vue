@@ -12,7 +12,8 @@
     </div>
     
     <div class="message-content">
-      <p class="message-text">{{ message.text }}</p>
+      <p v-if="message.isUser" class="message-text">{{ message.text }}</p>
+      <div v-else class="message-text markdown" v-html="renderedText"></div>
       <time 
         class="message-timestamp"
         :datetime="message.timestamp"
@@ -28,8 +29,18 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+// Links from the bot open in a new tab
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A') {
+    node.setAttribute('target', '_blank')
+    node.setAttribute('rel', 'noopener noreferrer')
+  }
+})
 
 const props = defineProps({
   message: {
@@ -46,9 +57,13 @@ const messageAriaLabel = computed(() => {
   return `${sender}: ${props.message.text}`
 })
 
+const renderedText = computed(() =>
+  DOMPurify.sanitize(marked.parse(props.message.text, { breaks: true, gfm: true }))
+)
+
 const formatTime = (timestamp) => {
   try {
-    return new Date(timestamp).toLocaleTimeString('pt-BR', {
+    return new Date(timestamp).toLocaleTimeString(locale.value === 'en' ? 'en-US' : 'pt-BR', {
       hour: '2-digit',
       minute: '2-digit'
     })
@@ -59,7 +74,7 @@ const formatTime = (timestamp) => {
 
 const formatTimestamp = (timestamp) => {
   try {
-    return new Date(timestamp).toLocaleString()
+    return new Date(timestamp).toLocaleString(locale.value === 'en' ? 'en-US' : 'pt-BR')
   } catch {
     return timestamp
   }
@@ -119,6 +134,54 @@ const formatTimestamp = (timestamp) => {
 .message-text {
   margin: 0;
   line-height: 1.5;
+}
+
+.markdown :deep(p),
+.markdown :deep(ul),
+.markdown :deep(ol) {
+  margin: 0 0 0.5rem;
+}
+
+.markdown :deep(ul),
+.markdown :deep(ol) {
+  padding-left: 1.25rem;
+}
+
+.markdown :deep(> :last-child) {
+  margin-bottom: 0;
+}
+
+.markdown :deep(a) {
+  color: var(--primary-color);
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.markdown :deep(code) {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+.markdown :deep(pre) {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 0.5rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.markdown :deep(pre code) {
+  background: none;
+  padding: 0;
+}
+
+.markdown :deep(h1),
+.markdown :deep(h2),
+.markdown :deep(h3),
+.markdown :deep(h4) {
+  font-size: 1rem;
+  margin: 0.5rem 0 0.25rem;
 }
 
 .message-timestamp {

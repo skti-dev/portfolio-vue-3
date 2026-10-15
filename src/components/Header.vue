@@ -4,7 +4,12 @@
     <div class="mobile-overlay" :class="{ active: isMobileMenuOpen }" @click="closeMobileMenu"></div>
     
     <nav class="nav container">
-      <div class="logo">{{ $t('portfolio') }}</div>
+      <a
+        href="#"
+        class="logo"
+        :title="$t('backToTop')"
+        @click.prevent="scrollToTop"
+      >{{ $t('portfolio') }}</a>
       
       <!-- Mobile menu button -->
       <button class="mobile-menu-btn" @click="toggleMobileMenu" :class="{ active: isMobileMenuOpen }">
@@ -58,6 +63,10 @@ export default {
         // Close mobile menu after navigation
         this.closeMobileMenu()
       }
+    },
+    scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      this.closeMobileMenu()
     },
     changeLanguage(locale) {
       this.$i18n.locale = locale

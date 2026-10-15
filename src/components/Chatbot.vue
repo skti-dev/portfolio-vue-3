@@ -119,12 +119,12 @@ const handleSendMessage = async () => {
   }
 }
 
-// Update welcome message when language changes
+// Keep the conversation; only the welcome message follows the new language
 watch(locale, () => {
   if (messages.value.length > 0 && !messages.value[0].isUser) {
     messages.value[0].text = t('chatbot.welcome')
   }
-}, { immediate: false })
+})
 
 // Mobile: lock page scroll and fit the window to the visible area (keyboard included)
 const mobileQuery = window.matchMedia('(max-width: 768px)')
