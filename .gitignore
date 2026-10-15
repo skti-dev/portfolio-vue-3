@@ -34,3 +34,6 @@ Thumbs.db
 # Logs
 logs
 *.log
+# Cloudflare Worker
+.dev.vars
+.wrangler/

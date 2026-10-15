@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { watch, onUnmounted } from 'vue'
+import { watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ChatMessage from './ChatMessage.vue'
 import TypingIndicator from './TypingIndicator.vue'
@@ -126,9 +126,42 @@ watch(locale, () => {
   }
 }, { immediate: false })
 
+// Mobile: lock page scroll and fit the window to the visible area (keyboard included)
+const mobileQuery = window.matchMedia('(max-width: 768px)')
+
+const syncViewport = () => {
+  const vv = window.visualViewport
+  const root = document.documentElement
+  if (!vv || !isOpen.value || !mobileQuery.matches) {
+    root.style.removeProperty('--chat-height')
+    root.style.removeProperty('--chat-top')
+    return
+  }
+  root.style.setProperty('--chat-height', `${vv.height}px`)
+  root.style.setProperty('--chat-top', `${vv.offsetTop}px`)
+}
+
+const updateMobileState = () => {
+  const lock = isOpen.value && mobileQuery.matches
+  document.body.classList.toggle('chatbot-open', lock)
+  syncViewport()
+}
+
+watch(isOpen, updateMobileState)
+
+onMounted(() => {
+  window.visualViewport?.addEventListener('resize', syncViewport)
+  window.visualViewport?.addEventListener('scroll', syncViewport)
+  mobileQuery.addEventListener('change', updateMobileState)
+})
+
 // Cleanup on unmount
 onUnmounted(() => {
   isTyping.value = false
+  window.visualViewport?.removeEventListener('resize', syncViewport)
+  window.visualViewport?.removeEventListener('scroll', syncViewport)
+  mobileQuery.removeEventListener('change', updateMobileState)
+  document.body.classList.remove('chatbot-open')
 })
 </script>
 
@@ -147,6 +180,8 @@ onUnmounted(() => {
   transform: translateX(-350px);
   width: 350px;
   height: 500px;
+  max-height: calc(100vh - 120px);
+  max-height: calc(100dvh - 120px);
   background: white;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
@@ -289,121 +324,57 @@ onUnmounted(() => {
   }
 }
 
-/* Mobile médio */
+/* Mobile: chat em tela cheia, acompanhando a área visível (teclado incluso) */
 @media (max-width: 768px) {
   .chatbot-container {
-    bottom: 0;
-    right: 0;
-    left: 0;
-    top: 0;
+    bottom: 15px;
+    right: 15px;
   }
-  
+
   .chatbot-window {
     position: fixed;
-    top: 0;
+    top: var(--chat-top, 0px);
     left: 0;
     right: 0;
-    bottom: 0;
-    width: 100svw;
-    height: 100svh;
+    width: 100%;
+    height: 100vh;
+    height: var(--chat-height, 100dvh);
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    max-height: none;
     transform: none;
     border-radius: 0;
     box-shadow: none;
     border: none;
+    z-index: 1100;
   }
-  
-  .chatbot-header {
-    padding: 1rem 1.5rem;
-    min-height: 60px;
-  }
-  
-  .chatbot-header h3 {
-    font-size: 1.2rem;
-  }
-  
-  .chatbot-messages {
-    padding: 1rem 1.5rem;
-    /* Ajusta altura considerando header e input */
-    height: calc(100svh - 120px - env(safe-area-inset-bottom));
-  }
-  
-  .chatbot-input {
-    padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom));
-    min-height: 80px;
-  }
-  
-  .message-input {
-    font-size: 16px; /* Previne zoom no iOS */
-    padding: 0.875rem 1.25rem;
-  }
-  
-  .chatbot-send {
-    width: 48px;
-    height: 48px;
-    font-size: 1.1rem;
-  }
-}
 
-/* Mobile pequeno */
-@media (max-width: 480px) {
   .chatbot-header {
+    flex-shrink: 0;
     padding: 0.875rem 1rem;
-    min-height: 56px;
+    padding-top: max(0.875rem, env(safe-area-inset-top));
   }
-  
-  .chatbot-header h3 {
-    font-size: 1.1rem;
-  }
-  
+
   .chatbot-messages {
-    padding: 0.875rem 1rem;
-    height: calc(100svh - 112px - env(safe-area-inset-bottom));
+    min-height: 0;
+    padding: 1rem;
+    overscroll-behavior: contain;
   }
-  
+
   .chatbot-input {
-    padding: 0.875rem 1rem calc(0.875rem + env(safe-area-inset-bottom));
-    min-height: 76px;
-  }
-  
-  .message-input {
-    font-size: 16px;
+    flex-shrink: 0;
     padding: 0.75rem 1rem;
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
-  
+
+  .message-input {
+    min-width: 0;
+    font-size: 16px; /* Previne zoom no iOS */
+  }
+
   .chatbot-send {
-    width: 44px;
-    height: 44px;
-    font-size: 1rem;
-  }
-}
-
-/* Orientação landscape no mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .chatbot-messages {
-    height: calc(100svh - 100px - env(safe-area-inset-bottom));
-  }
-  
-  .chatbot-header {
-    min-height: 50px;
-    padding: 0.75rem 1.5rem;
-  }
-  
-  .chatbot-input {
-    min-height: 70px;
-    padding: 0.75rem 1.5rem calc(0.75rem + env(safe-area-inset-bottom));
-  }
-}
-
-/* Suporte para notch e safe areas */
-@supports (padding: max(0px)) {
-  @media (max-width: 768px) {
-    .chatbot-header {
-      padding-top: max(1rem, env(safe-area-inset-top));
-    }
-    
-    .chatbot-input {
-      padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    }
+    flex-shrink: 0;
   }
 }
 

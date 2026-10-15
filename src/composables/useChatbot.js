@@ -10,9 +10,10 @@ export function useChatbot() {
   const messages = ref([]);
   const messagesContainer = ref(null);
 
-  const API_BASE_URL =
+  const API_BASE_URL = (
     import.meta.env.VITE_CHATBOT_API_URL ||
-    "https://good-monster-socially.ngrok-free.app/";
+    (import.meta.env.DEV ? "http://localhost:8787" : "")
+  ).replace(/\/+$/, "");
 
   const addMessage = (text, isUser = false) => {
     const message = {

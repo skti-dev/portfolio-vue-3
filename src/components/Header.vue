@@ -20,30 +20,10 @@
         <li><a href="#sobre" @click="scrollTo('sobre')">{{ $t('nav.about') }}</a></li>
         <li><a href="#projetos" @click="scrollTo('projetos')">{{ $t('nav.projects') }}</a></li>
         <li><a href="#contato" @click="scrollTo('contato')">{{ $t('nav.contact') }}</a></li>
-        
-        <!-- Language toggle inside mobile menu -->
-        <li class="mobile-language-toggle">
-          <div class="language-toggle">
-            <button 
-              class="language-btn" 
-              :class="{ active: $i18n.locale === 'pt' }"
-              @click="changeLanguage('pt')"
-            >
-              PT
-            </button>
-            <button 
-              class="language-btn" 
-              :class="{ active: $i18n.locale === 'en' }"
-              @click="changeLanguage('en')"
-            >
-              EN
-            </button>
-          </div>
-        </li>
       </ul>
-      
-      <!-- Desktop language toggle -->
-      <div class="language-toggle desktop-only">
+
+      <!-- Language toggle (always visible, outside the mobile menu) -->
+      <div class="language-toggle header-language">
         <button 
           class="language-btn" 
           :class="{ active: $i18n.locale === 'pt' }"

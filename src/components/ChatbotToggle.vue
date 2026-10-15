@@ -1,6 +1,7 @@
 <template>
   <button 
     class="chatbot-toggle"
+    :class="{ 'is-open': isOpen }"
     @click="$emit('toggle')"
     :aria-label="toggleAriaLabel"
     :aria-expanded="isOpen"
@@ -75,6 +76,11 @@ const toggleAriaLabel = computed(() => {
     width: 50px;
     height: 50px;
     font-size: 1.1rem;
+  }
+
+  /* Em tela cheia o chat já tem o botão de fechar no header */
+  .chatbot-toggle.is-open {
+    display: none;
   }
 }
 </style>

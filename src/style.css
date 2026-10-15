@@ -153,21 +153,23 @@ body.mobile-menu-open {
   background: rgba(255,255,255,0.1);
 }
 
-/* Mobile Language Toggle */
-.mobile-language-toggle {
-  margin-top: 1rem;
+/* Header Language Toggle - between logo and menu button on mobile */
+.header-language {
+  order: 2;
+  margin-left: auto;
+  margin-right: 1.25rem;
+  z-index: 1003;
 }
 
-/* Desktop Language Toggle - Hidden by default (mobile first) */
-.desktop-only {
-  display: none !important;
+.mobile-menu-btn {
+  order: 3;
 }
 
-/* Show only on desktop */
 @media (min-width: 768px) {
-  .desktop-only {
-    display: flex !important;
+  .header-language {
+    order: 0;
     margin-left: 2rem;
+    margin-right: 0;
   }
 }
 
@@ -676,13 +678,6 @@ body.mobile-menu-open {
     background: transparent;
   }
   
-  /* Hide mobile language toggle, show desktop */
-  .mobile-language-toggle {
-    display: none;
-  }
-  
-  /* Desktop language toggle is already shown by the rule above */
-  
   .logo {
     font-size: 1.5rem;
   }
@@ -816,41 +811,17 @@ body.mobile-menu-open {
     margin-top: 60px;
   }
   
-  /* Force hide desktop language toggle on mobile */
-  .desktop-only {
-    display: none !important;
+  .language-btn {
+    padding: 0.4rem 0.6rem;
   }
-  
-  /* Ensure mobile language toggle is visible */
-  .mobile-language-toggle {
-    display: block !important;
-  }
-  
-  /* Prevent scroll when mobile menu is open */
-  body.mobile-menu-open {
+
+  /* Prevent scroll when mobile menu or chatbot is open */
+  body.mobile-menu-open,
+  body.chatbot-open {
     overflow: hidden;
   }
-  
-  .chatbot-window {
-    width: calc(100vw - 40px);
-    height: 400px;
-    right: -10px;
-  }
-  
-  .chatbot-messages {
-    height: 260px;
-  }
-  
-  .chatbot-container {
-    right: 15px;
-    bottom: 15px;
-    width: 0;
-    height: 0;
-  }
-  
-  .chatbot-toggle {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
+
+  body.mobile-menu-open .chatbot-container {
+    display: none;
   }
 }
