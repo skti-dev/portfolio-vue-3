@@ -14,7 +14,7 @@ export const messages = {
     hero: {
       greeting: "Olá, eu sou",
       description:
-        "Desenvolvedor apaixonado por tecnologia, sempre em busca de novos desafios e soluções inovadoras. Bem-vindo ao meu portfólio!",
+        "Desenvolvedor FullStack e de IA com mais de 7 anos de experiência em web, mobile e integrações com LLMs.",
       contactMe: "Entre em Contato",
       viewProjects: "Ver Projetos",
       profileAlt: "Foto de perfil de Augusto Seabra",
@@ -41,24 +41,39 @@ export const messages = {
       educationText:
         "Formado em Tecnologia em Sistemas para Internet pela FIAP (Faculdade de Informática e Administração Paulista) em 16 de dezembro de 2022. Título obtido: Tecnólogo em Sistemas para Internet.",
       downloadDiploma: "Baixar Diploma Digital",
-      mainProjects: "Principais Projetos",
-      mainProjectsText: `Possuo experiência profissional no desenvolvimento de landing pages como freelancer, utilizando principalmente React e Vue. Atuei na criação de um sistema de atendimento humano para a empresa Konecta Brazil, amplamente utilizado por seus clientes, desenvolvido com Vue, API em PHP e integração via WebSocket. Também participei da integração de sistemas de atendimento médico para a Sami Saúde, utilizando a biblioteca da Twilio.
-      Em projetos pessoais, alguns destaques que desenvolvi:
-      - Um e-commerce simples (Vue + Node.js + PHP);
-      - Um aplicativo de gerenciamento para oficinas de funilaria e pintura (React Native com Expo + backend em Python);
-      Modelos de inteligência artificial com visão computacional para:
-      - Classificação de modelos de carros;
-      - Classificação do nível de avarias em veículos colididos;
-      - Identificação de peças automotivas.
-      Também desenvolvo chatbots com IA e agentes com bases de conhecimento personalizadas sobre diversos temas.`,
+      mainProjects: "Experiência Profissional",
+      mainProjectsText: `Mais de 7 anos como desenvolvedor web, com foco em saúde, telecom e educação.
+
+Konecta Brazil: sistemas de atendimento em PHP e Vue, com chat em tempo real e integrações omnichannel. Reescrevi o k-assist, gateway de IA da empresa, que atende cerca de 50 mil chamadas por dia.
+
+Vitalis Saúde Mental (2026): desenvolvi a API, o back-office web e o app mobile da plataforma, entregue em produção.
+
+Sami Saúde: frontend em React e TypeScript, com chamadas de vídeo via Twilio.
+
+Freelancer: projetos completos direto com o cliente e landing pages para agências de marketing.`,
       interests: "Áreas de Interesse",
       interestsText:
-        "Tenho grande interesse e experiência em desenvolvimento web fullstack, atuando com diversas tecnologias no frontend e backend. Também me interesso por desenvolvimento mobile, criação de APIs e inteligência artificial, com sólida base em Python, Langchain e integração com a API da OpenAI. Além disso, sou entusiasta de Arduino e gosto de desenvolver soluções físicas com componentes eletrônicos.",
+        "Desenvolvimento fullstack com React, Vue, Node.js e Python, apps mobile com React Native e IA aplicada: agentes, RAG e integração com OpenAI, Gemini e Claude. Nas horas vagas, projetos com Arduino.",
       plus: "Informações adicionais",
       plusText:
-        "Possuo experiência em gestão de pessoas, atuando no acompanhamento de equipes de desenvolvimento, promovendo code reviews com foco em qualidade de código e boas práticas. Familiaridade com metodologias ágeis, especialmente Scrum e Kanban, participando ativamente de sprints, plannings e dailies.",
+        "Experiência liderando pequenas equipes de frontend e conduzindo code reviews. Trabalho com Scrum, Kanban e desenvolvimento orientado a especificação.",
     },
     projects: [
+      {
+        title: "🧠 Vitalis Saúde Mental",
+        description:
+          "Plataforma de saúde mental com API, back-office web e app mobile, desenvolvida sozinho e entregue em produção. Node.js, TypeScript, PostgreSQL, React e React Native, com pagamentos via Stripe, prescrição digital (Memed) e BI em Metabase.",
+      },
+      {
+        title: "⚡ k-assist: Gateway de IA",
+        description:
+          "Gateway de IA da Konecta, reescrito por mim. Atende cerca de 50 mil chamadas por dia em 90 serviços, com roteamento entre OpenAI, Gemini e Claude, streaming e tool calling.",
+      },
+      {
+        title: "🎓 BNCC App (Fatec Cotia)",
+        description:
+          "Plataforma de questionários educacionais baseados na BNCC, feita para a Fatec Cotia. App em React Native (Expo), API em FastAPI com MongoDB e um gerador de questões com IA (LangChain e OpenAI) a partir das habilidades da BNCC.",
+      },
       {
         title: "🛡️ Clash of Clans Insights",
         description:
@@ -70,9 +85,9 @@ export const messages = {
           "Landing page institucional para uma empresa especializada na venda de aparelhos auditivos. Projeto focado em performance, clareza e acessibilidade.",
       },
       {
-        title: "🤖 Bot do Telegram - Sobre Augusto",
+        title: "🚗 Identificação de Carros",
         description:
-          "Bot simples criado para responder perguntas pessoais sobre mim (Augusto), utilizando LangChain e a API Groq. Possui fallback com busca dinâmica via SerpAPI caso a resposta não esteja na base local.",
+          "Modelo de visão computacional que identifica marca e modelo de carros a partir de fotos. ResNet50 ajustada com PyTorch sobre o Stanford Cars Dataset, ampliado com carros populares no Brasil coletados por crawler, e interface em Streamlit.",
       },
       {
         title: "🛹 Skate Dice",
@@ -83,11 +98,6 @@ export const messages = {
         title: "🏢 JAC Grupo",
         description:
           "Landing page desenvolvida para uma empresa de gestão de condomínios, com foco em identidade visual corporativa e experiência do usuário.",
-      },
-      {
-        title: "🛍️ E-commerce Fullstack",
-        description:
-          "Plataforma de e-commerce desenvolvida com Vue 3 no frontend, Node.js no backend e integração com serviços em PHP. Conta com funcionalidades completas de catálogo de produtos, carrinho de compras, sistema de login, painel administrativo e gerenciamento de pedidos. O projeto está pronto para integração com meios de pagamento, restando apenas a inclusão dessa etapa para ser totalmente funcional.",
       },
     ],
     contact: {
@@ -145,7 +155,7 @@ export const messages = {
     hero: {
       greeting: "Hello, I am",
       description:
-        "Developer passionate about technology, always looking for new challenges and innovative solutions. Welcome to my portfolio!",
+        "FullStack and AI developer with 7+ years of experience in web, mobile and LLM integrations.",
       contactMe: "Contact Me",
       viewProjects: "View Projects",
       profileAlt: "Profile picture of Augusto Seabra",
@@ -172,24 +182,39 @@ export const messages = {
       educationText:
         "Graduated in Internet Systems Technology from FIAP (Faculdade de Informática e Administração Paulista) on December 16, 2022. Degree earned: Technologist in Internet Systems.",
       downloadDiploma: "Download Digital Diploma",
-      mainProjects: "Main Projects",
-      mainProjectsText: `I have professional experience developing landing pages as a freelancer, mainly using React and Vue. I helped create a human customer service system for Konecta Brazil, widely used by their clients, built with Vue, a PHP API, and WebSocket integration. I also worked on the integration of medical service systems for Sami Saúde, using the Twilio library.
-      In personal projects, some highlights I developed:
-      - A simple e-commerce platform (Vue + Node.js + PHP);
-      - A management app for auto body and paint shops (React Native with Expo + Python backend);
-      Computer vision AI models for:
-      - Car model classification;
-      - Damage severity classification on crashed vehicles;
-      - Auto parts identification.
-      I also build AI-powered chatbots and agents with custom knowledge bases on various topics.`,
+      mainProjects: "Professional Experience",
+      mainProjectsText: `7+ years as a web developer, mostly in healthcare, telecom and education.
+
+Konecta Brazil: customer service systems in PHP and Vue, with real-time chat and omnichannel integrations. I rewrote k-assist, the company's AI gateway, which handles around 50k calls per day.
+
+Vitalis Saúde Mental (2026): I built the platform's API, web back-office and mobile app on my own and delivered it to production.
+
+Sami Saúde: React and TypeScript frontend, with video calls via Twilio.
+
+Freelance: full projects directly with clients and landing pages for marketing agencies.`,
       interests: "Areas of Interest",
       interestsText:
-        "I have strong interest and experience in fullstack web development, working with a wide range of frontend and backend technologies. I'm also interested in mobile development, API design, and artificial intelligence, with a solid background in Python, Langchain, and OpenAI API integration. Additionally, I'm an Arduino enthusiast and enjoy building physical devices with electronic components.",
+        "Fullstack development with React, Vue, Node.js and Python, mobile apps with React Native and applied AI: agents, RAG and integrations with OpenAI, Gemini and Claude. In my spare time, Arduino projects.",
       plus: "Additional Information",
       plusText:
-        "I have experience in people management, supporting development teams and conducting code reviews focused on code quality and best practices. I'm familiar with agile methodologies, especially Scrum and Kanban, actively participating in sprints, plannings, and daily meetings.",
+        "Experience leading small frontend teams and running code reviews. I work with Scrum, Kanban and spec-driven development.",
     },
     projects: [
+      {
+        title: "🧠 Vitalis Saúde Mental",
+        description:
+          "Mental health platform with an API, web back-office and mobile app, built on my own and delivered in production. Node.js, TypeScript, PostgreSQL, React and React Native, with Stripe payments, digital prescriptions (Memed) and BI on Metabase.",
+      },
+      {
+        title: "⚡ k-assist: AI Gateway",
+        description:
+          "Konecta's AI gateway, which I rewrote. Handles around 50k calls per day across 90 services, with routing between OpenAI, Gemini and Claude, streaming and tool calling.",
+      },
+      {
+        title: "🎓 BNCC App (Fatec Cotia)",
+        description:
+          "Educational quiz platform based on Brazil's national curriculum (BNCC), built for Fatec Cotia. React Native (Expo) app, FastAPI API with MongoDB and an AI question generator (LangChain and OpenAI) driven by BNCC skills.",
+      },
       {
         title: "🛡️ Clash of Clans Insights",
         description:
@@ -201,9 +226,9 @@ export const messages = {
           "Institutional landing page for a company specializing in hearing aid sales. The project focuses on performance, clarity, and accessibility.",
       },
       {
-        title: "🤖 Telegram Bot – About Augusto",
+        title: "🚗 Car Identification",
         description:
-          "A simple Telegram bot designed to answer personal questions about me (Augusto), using LangChain and the Groq API. Includes fallback search functionality with SerpAPI if no answer is found locally.",
+          "Computer vision model that identifies car make and model from photos. ResNet50 fine-tuned with PyTorch on the Stanford Cars Dataset, extended with popular Brazilian cars collected by a crawler, and a Streamlit interface.",
       },
       {
         title: "🛹 Skate Dice",
@@ -214,11 +239,6 @@ export const messages = {
         title: "🏢 JAC Group",
         description:
           "Landing page for a condominium management company, designed with a strong corporate visual identity and user-friendly layout.",
-      },
-      {
-        title: "🛍️ Fullstack E-commerce",
-        description:
-          "E-commerce platform built with Vue 3 on the frontend, Node.js on the backend, and additional services in PHP. Includes full product catalog, shopping cart, user authentication, admin panel, and order management system. The platform is ready for payment gateway integration, with only that step remaining to make it fully operational.",
       },
     ],
     contact: {

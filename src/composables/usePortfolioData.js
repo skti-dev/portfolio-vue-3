@@ -5,39 +5,51 @@ import diplomaPdf from "@/assets/docs/RepresentacaoVisualDiplomaDigital-FIAP.pdf
 const projects = ref([
   {
     id: 0,
+    link: null,
+    tech: ["Node.js", "TypeScript", "React", "React Native", "PostgreSQL", "Stripe"],
+    category: "product",
+  },
+  {
+    id: 1,
+    link: null,
+    tech: ["Python", "PHP", "LLMs", "MCP"],
+    category: "ai",
+  },
+  {
+    id: 2,
+    link: "https://github.com/skti-dev/bncc-frontend",
+    tech: ["React Native", "Python", "FastAPI", "MongoDB", "LangChain"],
+    category: "education",
+  },
+  {
+    id: 3,
     link: "https://github.com/skti-dev/coc-insights",
     tech: ["Python", "Data Analysis"],
     category: "analytics",
   },
   {
-    id: 1,
-    link: "https://sonix.com.br/",
-    tech: ["Web Development", "Landing Page"],
-    category: "website",
-  },
-  {
-    id: 2,
-    link: "https://github.com/skti-dev/python-telegram-bot",
-    tech: ["Python", "Bot Development"],
-    category: "automation",
-  },
-  {
-    id: 3,
-    link: "https://skate-dice.vercel.app/",
-    tech: ["Game Development"],
-    category: "game",
-  },
-  {
     id: 4,
-    link: "https://jacgruporj.com.br/",
+    link: null,
     tech: ["Web Development", "Landing Page"],
     category: "website",
   },
   {
     id: 5,
-    link: "https://github.com/skti-dev",
-    tech: ["Web Development"],
-    category: "product",
+    link: "https://github.com/skti-dev/identificacao-de-carros",
+    tech: ["Python", "PyTorch", "Computer Vision"],
+    category: "ai",
+  },
+  {
+    id: 6,
+    link: "https://skate-dice.vercel.app/",
+    tech: ["Game Development"],
+    category: "game",
+  },
+  {
+    id: 7,
+    link: null,
+    tech: ["Web Development", "Landing Page"],
+    category: "website",
   },
 ]);
 

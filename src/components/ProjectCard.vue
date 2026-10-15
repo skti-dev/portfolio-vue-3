@@ -17,7 +17,7 @@
       <p class="card-description">{{ $t(`projects.${project.id}.description`) }}</p>
     </div>
     
-    <footer class="card-footer">
+    <footer class="card-footer" v-if="project.link">
       <a 
         :href="project.link" 
         target="_blank" 
@@ -39,7 +39,7 @@ defineProps({
     type: Object,
     required: true,
     validator: (project) => {
-      return typeof project.id !== 'undefined' && project.link
+      return typeof project.id !== 'undefined'
     }
   }
 })
