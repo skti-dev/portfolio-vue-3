@@ -100,6 +100,11 @@ Freelancer: projetos completos direto com o cliente e landing pages para agênci
         description:
           "Landing page desenvolvida para uma empresa de gestão de condomínios, com foco em identidade visual corporativa e experiência do usuário.",
       },
+      {
+        title: "🧳 Cofre de Viagem",
+        description:
+          "Web app instalável (PWA) que funciona offline e reúne tudo da viagem num lugar só: roteiro dia a dia, voos, hospedagens, mapas e documentos, cifrados no aparelho com AES-256 e abertos só com a senha. Inclui um assistente de IA (Claude com tool calling) que responde dúvidas do roteiro, lança gastos por texto, arruma a malinha e atualiza as pendências, com fila offline que sincroniza ao voltar a rede.",
+      },
     ],
     contact: {
       email: "Email",
@@ -241,6 +246,11 @@ Freelance: full projects directly with clients and landing pages for marketing a
         title: "🏢 JAC Group",
         description:
           "Landing page for a condominium management company, designed with a strong corporate visual identity and user-friendly layout.",
+      },
+      {
+        title: "🧳 Travel Vault",
+        description:
+          "Installable web app (PWA) that works offline and keeps everything for a trip in one place: day-by-day itinerary, flights, stays, maps and documents, encrypted on the device with AES-256 and unlocked only with a passphrase. Includes an AI assistant (Claude with tool calling) that answers itinerary questions, logs expenses from plain text, manages the packing list and updates pending tasks, with an offline queue that syncs once the connection is back.",
       },
     ],
     contact: {

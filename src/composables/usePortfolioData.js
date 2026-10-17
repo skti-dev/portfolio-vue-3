@@ -10,6 +10,12 @@ const projects = ref([
     category: "product",
   },
   {
+    id: 8,
+    link: "https://cofre-demo.pages.dev/",
+    tech: ["Python", "FastAPI", "Claude API", "PWA", "PostgreSQL", "Cloudflare"],
+    category: "ai",
+  },
+  {
     id: 1,
     link: null,
     tech: ["Python", "PHP", "LLMs", "MCP"],
