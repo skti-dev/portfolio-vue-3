@@ -11,9 +11,9 @@ const projects = ref([
   },
   {
     id: 8,
-    link: "https://cofre-demo.pages.dev/",
-    tech: ["Python", "FastAPI", "Claude API", "PWA", "PostgreSQL", "Cloudflare"],
-    category: "ai",
+    link: "https://valise.app.br/",
+    tech: ["Python", "FastAPI", "Claude API", "PWA", "PostgreSQL", "Cloudflare", "AWS"],
+    category: "product",
   },
   {
     id: 1,
