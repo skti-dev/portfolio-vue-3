@@ -5,6 +5,12 @@ export const messages = {
     portfolio: "AS - Portfólio",
     backToTop: "Voltar ao topo",
     name,
+    meta: {
+      // {'|'} escapes the pipe, which vue-i18n otherwise treats as a plural separator
+      title: "Augusto Seabra {'|'} Desenvolvedor FullStack & IA",
+      description:
+        "Portfólio de Augusto Seabra, desenvolvedor FullStack e de IA com mais de 7 anos de experiência em React, Vue, Node.js e Python.",
+    },
     nav: {
       home: "Início",
       certificates: "Certificados",
@@ -152,6 +158,11 @@ Freelancer: projetos completos direto com o cliente e landing pages para agênci
     portfolio: "AS - Portfolio",
     backToTop: "Back to top",
     name,
+    meta: {
+      title: "Augusto Seabra {'|'} FullStack & AI Developer",
+      description:
+        "Portfolio of Augusto Seabra, a FullStack and AI developer with over 7 years of experience in React, Vue, Node.js and Python.",
+    },
     nav: {
       home: "Home",
       certificates: "Certificates",
